@@ -1,0 +1,74 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fullpage}       % nastav mensie okraje
+\usepackage[utf8]{inputenc} % kodovanie utf8
+\usepackage[T1]{fontenc}    % kodovanie utf8
+\usepackage[slovak]{babel}  % pouzitie slovenciny
+\usepackage{url}            % lepsie zobrazovanie URL
+\usepackage{bibentry}       % zobrazovanie celych odkazov v texte
+\nobibliography*            % odkazy sa maju dat aj do zoznamu literatury
+
+\begin{document}
+
+\title{1-INF-911 Bakalársky seminár (1)\\
+Domáca úloha 1}
+\date{Školský rok 2015/16}
+\author{Michal Smolík}
+
+\maketitle
+
+
+\section{Základné údaje o bakalárskej práci}
+
+\begin{description}
+% TODO: nizsie vyplnte udaje o vasom skolitelovi a praci
+\item[Školiteľ:] Michal Foríšek, PhD. 
+\item[Pracovisko školiteľa:] Katedra informatiky, FMFI UK
+\item[Názov práce:]Portál pre vyučovanie dynamického programovania
+
+\item[Cieľ práce:]Cieľom tejto práce je vytvoriť nový vzdelávací portál
+na vyučovanie dynamického programovania, ktorý sleduje postup žiakov
+a automaticky vyhodnocuje ich výsledky ako štatistické dáta. Portál
+%má ponúkať alebo ponúka?
+má ponúkať vizualizácie výpočtov vo vzorových príkladoch a dynamické
+priraďovanie úloh podľa žiakovych schopností.
+\end{description}
+
+\section{Kľúčové zdroje}
+
+V mojej bakalárskej práci sa plánujem opierať najmä o nasledujúce
+informačné zdroje.
+
+% TODO nizsie vyplte vase zdroje
+% pre kazdy v prikaze \bibentry dajte kluc z literatura.bib
+% vynechajte volny riadok (koniec odstavca) a potom
+% strucne popiste, preco je tento zdroj dolezity pre vasu pracu
+\begin{itemize}
+
+\item \bibentry{Django}
+
+Dokumentácia technológie Django ktorú používa server
+
+\item \bibentry{Scoops2015}
+
+Kniha obsahuje rady pre tvorbu serverov Django ktoré budem používať
+
+\item \bibentry{React}
+
+Dokumentácia knižnice React, ktorá je použitá vo webstránke
+
+\item \bibentry{Promise}
+
+Návod na použitie štruktúry Promise, ktorá je používaná pri posielaní požiadavok na server
+
+\item \bibentry{FBlogin}
+
+Návod naimplementáciu prihlasovania cez Facebook
+
+\end{itemize}
+% Koniec zoznamu zdrojov
+
+% Zapneme pouzitie suboru literatura.bib
+\bibliographystyle{plain}
+\bibliography{literatura} 
+
+\end{document}
