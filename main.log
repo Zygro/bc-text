@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.6)  28 JAN 2016 19:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.6)  28 JAN 2016 20:17
 entering extended mode
-**main.tex
-(main.tex
+**C:/Users/Zygro/Bc/bc-text/main.tex
+(C:/Users/Zygro/Bc/bc-text/main.tex
 LaTeX2e <2015/01/01> patch level 2
 Babel <3.9m> and hyphenation patterns for 69 languages loaded.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\book.cls"
@@ -306,6 +306,9 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen111
 \Gin@req@width=\dimen112
 )
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\natbib\bibentry.sty"
+Package: bibentry 2007/10/30 1.5 (PWD)
+)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -333,18 +336,18 @@ Package babel Info: Making ' an active character on input line 129.
 \cs@wordlen=\count93
 Package babel Info: Making - an active character on input line 294.
 )) (main.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -393,24 +396,23 @@ LaTeX Font Info:    ... okay on input line 30.
 \MPnumerator=\count98
 \makeMPintoPDFobject=\count99
 \everyMPtoPDFconversion=\toks19
-) [1
+) (main.bbl) [1
 
 {C:/Users/Zygro/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 80.
+(Font)              <12> on input line 81.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 80.
+(Font)              <8> on input line 81.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 80.
-
-[2] <images/zadanie.pdf, id=11, 597.50786pt x 845.04686pt>
+(Font)              <6> on input line 81.
+ [2] <images/zadanie.pdf, id=11, 597.50786pt x 845.04686pt>
 File: images/zadanie.pdf Graphic file (type pdf)
 
 <use images/zadanie.pdf>
-Package pdftex.def Info: images/zadanie.pdf used on input line 108.
+Package pdftex.def Info: images/zadanie.pdf used on input line 109.
 (pdftex.def)             Requested size: 485.1222pt x 686.09601pt.
 
-Overfull \hbox (4.82378pt too wide) in paragraph at lines 108--109
+Overfull \hbox (4.82378pt too wide) in paragraph at lines 109--110
 [] [] 
  []
 
@@ -420,65 +422,77 @@ Overfull \hbox (4.82378pt too wide) in paragraph at lines 108--109
 \tf@toc=\write3
  [6
 
-] (uvod.tex) (overview.tex
+] (uvod.tex) (zdroje.tex
 [1
 
 
 ]
-Kapitola 1.
-) (server.tex [2
-
-]
-Kapitola 2.
-[3
-
-]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 40.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 12.
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 40.
- [4])
-(front-end.tex [5]
-Kapitola 3.
-) (features.tex [6
-
-]
-Kapitola 4.
-) (zaver.tex [7
-
-]) [8
-
-] (main.bbl
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 5.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 12.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 12.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
+Overfull \hbox (5.67265pt too wide) in paragraph at lines 20--21
+[]\T1/cmr/m/n/12 React do-cu-men-ta-tion.  $\T1/cmtt/m/n/12 https : / / faceboo
+k . github . io / react / index . html$\T1/cmr/m/n/12 .  [2015-
+ []
+
+
+Overfull \hbox (16.16402pt too wide) in paragraph at lines 24--25
+[]\T1/cmr/m/n/12 Javascript pro-mise.  $\T1/cmtt/m/n/12 https : / / developer .
+ mozilla . org / en / docs / Web / JavaScript /$
+ []
+
+) (overview.tex [2
+
+]
+Kapitola 1.
+) (server.tex [3
+
+]
+Kapitola 2.
+[4
+
+] [5]) (front-end.tex [6]
+Kapitola 3.
+) (features.tex [7
+
+]
+Kapitola 4.
+) (zaver.tex [8
+
+]) [9
+
+] (main.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 14--18
 []\T1/cmr/m/n/12 Javascript pro-mise.  $\T1/cmtt/m/n/12 https : / / developer .
  mozilla . org / en / docs / Web /$
  []
 
-) [9
+) [10
 
 
 
 ] (main.aux) ) 
 Here is how much of TeX's memory you used:
- 2820 strings out of 493673
- 35905 string characters out of 3143150
- 104796 words of memory out of 3000000
- 6109 multiletter control sequences out of 15000+200000
+ 2855 strings out of 493673
+ 36510 string characters out of 3143150
+ 105290 words of memory out of 3000000
+ 6135 multiletter control sequences out of 15000+200000
  16396 words of font info for 37 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 27i,6n,23p,232b,275s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,6n,23p,263b,275s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappe
-n\ec\dpi600\ecti1200.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
-ur\jknappen\ec\dpi600\ectt1200.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fon
-ts\pk\ljfour\jknappen\ec\dpi600\ecsl1200.pk> <C:\Users\Zygro\AppData\Local\MiKT
-eX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\Zygro\AppData\
+n\ec\dpi600\ecsl1200.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
+ur\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fon
+ts\pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\Users\Zygro\AppData\Local\MiKT
+eX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1200.pk> <C:\Users\Zygro\AppData\
 Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.pk> <C:\Users\Zygr
 o\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.pk> <C:\
 Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx120
@@ -487,9 +501,9 @@ Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx120
 en\ec\dpi600\eccc2074.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljf
 our\jknappen\ec\dpi600\eccc1440.pk><C:/Program Files (x86)/MiKTeX 2.9/fonts/typ
 e1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (16 pages, 242432 bytes).
+Output written on main.pdf (17 pages, 245296 bytes).
 PDF statistics:
- 577 PDF objects out of 1000 (max. 8388607)
+ 584 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
