@@ -1,0 +1,52 @@
+\chapter{Server}
+
+\label{kap:server}
+
+V tejto kapitole sa oboznámime s vnútorným fungovaním servra, používaných bezpečnostných protokoloch
+a možnosťami poskytovanými administrátorovi.
+
+\section{Použité technológie}
+
+\subsection{Django 1.9}
+Django je open source framework nad programovacím jazykom Python ktorý uľahčuje vývoj a údržbu webových aplikácií.
+Poskytuje funkcionalitu servra na nízkych úrovňach (správa databázy, HTTP komunikácia a iné), čo umožňuje vývojárovi sa sústrediť na tvorbu samotného obsahu.
+Django takisto ponúka jednoducho implementovateľné možnosti ochrany pred niektorými najbežnejšími útokmi ako napríklad XSS, SQL injection alebo CSRF.
+
+Server používa framework Django 1.9 pre jednoduchosť vývoja spravovania databáz, autentifikácie uživateľov a prostredia pre administrátora.
+\subsection{REST framework}
+Django REST framework je v projekte využitý na jedoduché a prehľadné zobrazovanie obsahu databázy, odpovedí na HTTP požiadavky a na implementáciu
+token autorizácie. Umožňuje priamo v prehliadači posielať a zobraziť odpovede na požiadavky, čo zjednodušuje debugovací proces. Taktiež uľahčujú aj implementáciu externej OAuth
+autorizácie o ktorej si povieme neskôr
+
+\section{Testovač}
+\section{Bezpečnosť}
+\subsection{Autorizácia}
+Portál používa token autentifikáciu ktorý funguje nasledovne:
+
+Uživateľ pri prihlasovaní pošle prihlasovacie meno a heslo (tento krok je iný pri prihlasovaní cez externú doménu) a ako odpoveď
+dostane náhodne vygenerovaný reťazec o dĺžke približne 40 znakov. Potom všetky požiadavky na uživateľove dáta
+ musia v hlavičke uviesť tento token, inak budú zamietnuté.
+Server si pamätá uživateľov token až kým sa použivateľ neodhlási alebo mu nevyprší platnosť po dlhšej neaktivite.
+
+Vvšetky požiadavky musia obsahovať token, čo pomáha uživateľa chrániť pred CSRF útokom. Narozdiel od cookies,
+prehliadač nepridáva token do hlavičky automaticky a teda väčšina CSRF útokov bude zamietnutých.
+
+\subsection{Prihlasovanie cez externé portály}
+Portál má viacero možností prihlasovania sa cez externé portály. Použijeme prihlasovaciu schému OAuth 2.0 aby komunikácia s externým
+portálom prebiehala iba pri prihlasovaní po ktorom komunikácia bude prebiehať iba medzi klientom a servrom.
+
+Prihlasovanie cez OAuth 2.0 prebieha nasledovne:
+\begin{itemize}
+\item{Použivateľ sa prihlási na externý portál a potvrdí našej aplikácii vyžiadané oprávnenia}
+\item{Od externého portálu získa prístupový token na ten externý portál}
+\item{Tento token pošle nášmu servru}
+\item{Náš server pošle token externému portálu spolu s tajným ID našej aplikácie aby externý portál vedel že požiadavka prišla od našej aplikácie}
+\item{Ak externý portál potvrdí požiadavku, náš server vráti použivateľovi náš token a ďalej komunikujú iba s týmto novým tokenom.}
+\end{itemize}
+
+Pomocou tejto schémy sa bude dať prihlásiť cez Facebook, Google+ a GitHub.
+
+\subsection{Protokoly}
+Aby sme chránili použivateľové dáta a token, všetky požiadavky obsahujúce osobné dáta používajú šifrovaný protokol HTTPS. Keďže HTTPS je pomalší na spracovanie,
+používame ho iba na potrebné požiadavky. Preto verejne známe informácie ako napríklad zadania úloh alebo ich zoznam nemusia byť chránené a používajú rýchlejší HTTP.
+\section{Administrácia}
