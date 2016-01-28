@@ -1,0 +1,16 @@
+\select@language {slovak}
+\contentsline {chapter}{\IeC {\'U}vod}{1}
+\contentsline {chapter}{\numberline {1}\IeC {\'U}loha a pou\IeC {\v z}itie port\IeC {\'a}lu}{2}
+\contentsline {chapter}{\numberline {2}Server}{3}
+\contentsline {section}{\numberline {2.1}Pou\IeC {\v z}it\IeC {\'e} technol\IeC {\'o}gie}{3}
+\contentsline {subsection}{\numberline {2.1.1}Django 1.9}{3}
+\contentsline {subsection}{\numberline {2.1.2}REST framework}{3}
+\contentsline {section}{\numberline {2.2}Testova\IeC {\v c}}{4}
+\contentsline {section}{\numberline {2.3}Bezpe\IeC {\v c}nos\IeC {\v t}}{4}
+\contentsline {subsection}{\numberline {2.3.1}Autoriz\IeC {\'a}cia}{4}
+\contentsline {subsection}{\numberline {2.3.2}Prihlasovanie cez extern\IeC {\'e} port\IeC {\'a}ly}{4}
+\contentsline {subsection}{\numberline {2.3.3}Protokoly}{4}
+\contentsline {section}{\numberline {2.4}Administr\IeC {\'a}cia}{5}
+\contentsline {chapter}{\numberline {3}V\IeC {\'y}u\IeC {\v c}ba}{6}
+\contentsline {chapter}{\numberline {4}\IeC {\v D}al\IeC {\v s}ie funkcie}{7}
+\contentsline {chapter}{Z\IeC {\'a}ver}{8}
