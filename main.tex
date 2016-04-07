@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
+\usepackage{bibentry} 
 \usepackage{url}
 \usepackage[slovak]{babel} % vypnite pre prace v anglictine
 \linespread{1.25} % hodnota 1.25 by mala zodpovedat 1.5 riadkovaniu
@@ -28,7 +29,7 @@
 \def\mfpracovisko{ Katedra informatiky }
 
 \begin{document}     
-
+\nobibliography*
 % -------------------
 % --- Obalka ------
 % -------------------
@@ -130,12 +131,8 @@ Fakulta matematiky, fyziky a informatiky
 \section*{Abstrakt}
 
 
-Slovenský abstrakt v rozsahu 100-500 slov, jeden odstavec. Abstrakt
-stručne sumarizuje výsledky práce. Mal by byť pochopiteľný pre bežného
-informatika. Nemal by teda využívať skratky, termíny alebo označenie
-zavedené v práci, okrem tých, ktoré sú všeobecne známe.
 
-\paragraph*{Kľúčové slová:} jedno, druhé, tretie (prípadne štvrté, piate)
+\paragraph*{Kľúčové slová:}% jedno, druhé, tretie (prípadne štvrté, piate)
 % --- Koniec Abstrakt - Slovensky
 
 
@@ -145,8 +142,6 @@ zavedené v práci, okrem tých, ktoré sú všeobecne známe.
 \newpage 
 \section*{Abstract}
 
-Abstract in the English language (translation of the abstract in the
-Slovak language).
 
 
 \paragraph*{Keywords:} 
@@ -196,6 +191,8 @@ Slovak language).
 
 \input uvod.tex 
 
+\input zdroje.tex
+
 \input overview.tex
 
 \input server.tex
@@ -222,6 +219,7 @@ Slovak language).
 \thispagestyle{empty}
 \nocite{*}
 \clearpage
+
 
 \bibliographystyle{plain}
 \bibliography{literatura} 
