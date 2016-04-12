@@ -17,6 +17,11 @@
 \contentsline {subsection}{\numberline {2.4.1}Prid\IeC {\'a}vanie a hodnotenie \IeC {\'u}loh}{6}
 \contentsline {subsection}{\numberline {2.4.2}Zbieranie d\IeC {\'a}t o pou\IeC {\v z}ivate\IeC {\v l}och}{7}
 \contentsline {subsection}{\numberline {2.4.3}Opr\IeC {\'a}vnenia pou\IeC {\v z}ivate\IeC {\v l}a a administr\IeC {\'a}tora}{7}
-\contentsline {chapter}{\numberline {3}V\IeC {\'y}u\IeC {\v c}ba}{9}
-\contentsline {chapter}{\numberline {4}\IeC {\v D}al\IeC {\v s}ie funkcie}{10}
-\contentsline {chapter}{Z\IeC {\'a}ver}{11}
+\contentsline {section}{\numberline {2.5}Dokument\IeC {\'a}cia}{8}
+\contentsline {subsection}{\numberline {2.5.1}Lesson - \IeC {\'u}loha}{8}
+\contentsline {subsection}{\numberline {2.5.2}Submit - rie\IeC {\v s}enie}{9}
+\contentsline {subsection}{\numberline {2.5.3}Comment - koment\IeC {\'a}r}{9}
+\contentsline {subsection}{\numberline {2.5.4}Hint - rada}{10}
+\contentsline {chapter}{\numberline {3}V\IeC {\'y}u\IeC {\v c}ba}{11}
+\contentsline {chapter}{\numberline {4}\IeC {\v D}al\IeC {\v s}ie funkcie}{12}
+\contentsline {chapter}{Z\IeC {\'a}ver}{13}
