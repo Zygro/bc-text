@@ -1,0 +1,86 @@
+\chapter{Dokumentácia}
+\label{kap:doc}
+Django servery sledujú návrhový vzor Model-View-Controller (MVC), kde model je tabuľka
+databázy a view je spôsob zobrazenia (napríklad vo forme HTML stránky). Pre pochopenie
+funkcionality je dôležité vedieť aké modely a pohľady používame a ako medzi sebou interagujú,
+preto sa s nimi oboznámime.
+\section{Modely}
+\label{modely}
+Tu sa oboznámime s dôležitými modelmi, teda tabuľkami databázy.
+Pri každom modeli spomenieme jeho názov v implementácii a slovenský ekvivalent tohto názvu.
+\subsection{Lesson - úloha}
+\label{doc:lesson}
+Úlohy majú tieto polia:
+\begin{itemize}
+\itemsep0em
+\item \textbf{name}: meno úlohy ktoré sa zobrazuje používateľovi.
+\item \textbf{problem}: znenie úlohy.
+\item \textbf{pub\_date}: dátum publikácie úlohy.
+\item \textbf{number}: úroveň úlohy, používateľ musí mať vyriešené všetky povinné úlohy s
+  na nižších úrovniach aby mal k tejto úlohe prístup.
+\item \textbf{optional}: voliteľnosť úlohy. Povinné aj voliteľné úlohy sa odomykajú rovnako, voliteľné
+   ale neodomykajú neskoršie úlohy.
+\item \textbf{inputs}: vstupy na ktorých prebieha testovanie úlohy.
+\item \textbf{correct\_solution}: správne riešenie, oproti ktorému sa budú testovať používateľské
+   riešenia.
+\end{itemize}
+
+Pridávanie úloh je jednoduché - stačí vyplniť polia v administrátorskom prostredí
+a uložiť. Na každej úrovni ale musí byť práve jedna povinná úloha, preto po upravení
+alebo pridaní novej povinnej úlohy sa nasledovným spôsobom upraví poradie
+(funkcia sa zavolá signálom post_save, ktorý sa vykoná po uložení úlohy a nerobí
+rozdiel medzi pridávaním novej a upravovaním starej):
+
+Najprv sa všetky povinné úlohy posunú tak, aby neboli žiadne medzery v poradí.
+Potom všetky povinné úlohy čo majú úroveň väčšiu alebo rovnú úrovni upravovanej/pridanej
+úlohy sú posunuté o jednu úroveň vyššie (upravovaná/pridaná úloha nie je posunutá).
+Potom sú všetky úlohy znovu posunuté tak aby neboli medzery (pre prípad, že administrátor
+urobil chybu a pridal úlohu s číslom väčším ako má byť najvyššia úroveň, napríklad
+ak je 6 povinných úloh a novej úlohe zadá úroveň 10).
+
+Na úlohy máme tri rôzne pohľady (views): Jeden ktorý vráti všetky úrovne, voliteľnosti a názvy úloh ku ktorým má
+používateľ prístup, druhý meno, znenie a úroveň s voliteľnosťou jednej úlohy a tretí
+iba vstupy alebo skript na stiahnutie (ak používame testovač \ref{testovac1} alebo \ref{testovac2})
+
+\subsection{Submit - riešenie}
+Riešenie ktoré používateľ pošle na server na otestovanie.
+
+Polia:
+\begin{itemize}
+\item \textbf{user}: používateľ ktorý riešenie poslal
+\item \textbf{lesson}: úloha ktorú používateľ rieši týmto riešením
+\item \textbf{submittedFile}: súbor s riešením, ktoré bude odovzdané testovaču
+\item \textbf{result}: výsledok - pravda ak bolo riešenie správne, nepravda ak nebolo
+\end{itemize}
+
+Hneď ako server dostane nové riešenie, spustí testovač a jeho odpoveď uloží v poli
+\textbf{result}. Ak nie je správne, riešenie uložíme a pokračujeme v činnosti ako pred jeho poslaním.
+Ak testovač ale vyhodnotí riešenie ako správne, pred jeho uložením zvýši používateľovu
+úroveň o 1 (ak je úloha povinná) a označí úlohu ako vyriešenú.
+
+\subsection{Comment - komentár}
+Komentár od používateľa na úlohu.
+Polia:
+\begin{itemize}
+\item \textbf{user}: používateľ ktorý vytvoril komentár
+\item \textbf{lesson}: úloha ku ktorej bol komentár pridaný
+\item \textbf{text}: text komentára
+\item \textbf{date}: čas vytvorenia komentára, potrebný na zoraďovanie pri zobrazení
+\end{itemize}
+
+Pri komentároch sa bude zobrazovať aj úroveň autora a to, či úlohu vyriešil.
+Zatiaľ sú všetky komentáre prístupné všetkým používateľom (ak majú prístup k ich úlohe)
+
+Je možné že rozdelíme diskusie pre tých čo úlohu vyriešili a tých čo ešte nie
+alebo povolíme diskusiu iba pre úspešných riešiteľov, aby žiaden používateľ nemohol
+v diskusii prezradiť správne riešenie ostatným používateľom ktorí ešte úlohu nevyriešili.
+
+\subsection{Hint - rada}
+Rada k úlohe, pre prípad že ju používateľ nevie riešiť.
+
+Polia:
+\begin{itemize}
+\item \textbf{lesson}: úloha ku ktorej je táto rada
+\item \textbf{number}: poradové číslo rady
+\item \textbf{text}: text rady
+\end{itemize}

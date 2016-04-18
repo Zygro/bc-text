@@ -15,10 +15,15 @@ Django takisto ponúka jednoducho implementovateľné možnosti ochrany pred nie
 Server používa framework Django 1.9 pre jednoduchosť vývoja spravovania databáz, autentifikácie popouživateľov a prostredia pre administrátora.
 \subsection{REST framework}
 Django REST framework je v projekte využitý na jedoduché a prehľadné zobrazovanie obsahu databázy, odpovedí na HTTP požiadavky a na implementáciu
-token autorizácie. Umožňuje priamo v prehliadači posielať a zobraziť odpovede na požiadavky, čo zjednodušuje debugovací proces. Taktiež uľahčujú aj implementáciu externej OAuth
-autorizácie o ktorej si povieme neskôr.
+token autorizácie. Umožňuje priamo v prehliadači posielať a zobraziť odpovede na požiadavky, čo zjednodušuje debugovací proces. Uľahčuje aj implementáciu externej OAuth
+autorizácie (\ref{oAuth})
+
+Takisto obsahuje implementáciu pre\_save a post\_save signálov ktoré používame pri
+modeloch ktorých pridanie alebo zmeny priamo menia obsah iných modelov
+(napríklad pri automaticko zarovnávaní úloh (\ref{doc:lesson})).
 \newpage
 \section{Testovač}
+\label{testovace}
 Testovač je najdôležitejšia časť portálu, pretože dokáže zmerať schopnosti použivateľa. Sú tri možné spôsoby testovania:
 \subsection{Stiahnutie vstupov a poslanie výstupov}
 \label{testovac1}
@@ -72,6 +77,7 @@ Všetky požiadavky musia obsahovať token, čo pomáha použivateľa chrániť 
 prehliadač nepridáva token do hlavičky automaticky a teda väčšina CSRF útokov bude zamietnutých.
 
 \subsection{Prihlasovanie cez externé portály}
+\label{oAuth}
 Portál má viacero možností prihlasovania sa cez externé portály. Použijeme prihlasovaciu schému OAuth 2.0, aby komunikácia s externým
 portálom prebiehala iba pri prihlasovaní po ktorom použivateľov prehliadačl komunikuje so serverom ako keby sa prihlásil priamo na náš portál bez využitia externej služby.
 
@@ -95,9 +101,11 @@ používame ho iba na potrebné požiadavky. Preto verejne známe informácie, a
 \subsection{Pridávanie a hodnotenie úloh}
 Pridávanie a spravovanie úloh je hlavnou povinnosťou administrátora. Administrátor okrem zadávania úloh musí poskytnúť aj vzorové riešenie, prípadne nejaké rady k riešeniu úlohy a zaradiť ju podľa obtiažnosti.
 
-Keďže obtiažnosť úlohy sa niekedy ťažko odhaduje, používatelia budú mať možnosť po správnom vyriešení úlohu ohodnotiť. Budú mať možnosť (ale nie povinnosť) ohodnotiť jej obtiažnosť a zaujímavosť na stupnici od 1 do 5. Tieto hodnotenia sa budú priemerovať.
+Administrátor by sa mal snažiť, aby každá úloha mala ideálne používateľské hodnotenie (\ref{rating})
+Je najlepšie, aby každá úloha mala čo najvyššie hodnotenie zaujímavosti, nakoľko zaujímavé úlohy lepšie motivujú používateľov.
 
-Administrátor by sa mal snažiť, aby každá úloha mala čo najvyššie hodnotenie zaujímavosti. S hodnotením zložitosti je to ale inak: žiadna úloha by nemala byť príliš ľahká ani príliš ťažká, preto ideálny priemer hodnotenia zložitosti je 3.
+S hodnotením zložitosti je to ale inak: žiadna úloha by nemala byť príliš ľahká (aby bola pre používateľa výzvou) ani
+príliš ťažká (aby ju používateľ zvládol), preto ideálny priemer hodnotenia zložitosti je 3.
 
 Server bude poskytovať administrátorivi možnosť posúvať úlohy vyššie a nižšie v poradí, v ktorom ich používatelia riešia. Takisto bude označovať úlohy, ktoré majú príliš vysokú alebo príliš nízku obtiažnosť vzhľadom na úroveň riešiteľa a navrhovať nové miesto v poradí, kam ich zaradiť. Podobne bude označovať úlohy, ktoré sú považované za najmenej zaujímavé a bude na administrátorovi aby posúdil, či daná nezaujímavá úloha je dôležitá pre proces výučby alebo či ju možno zmeniť alebo odstrániť.
 \subsection{Zbieranie dát o použivateľoch}
@@ -120,84 +128,3 @@ Bežní používatelia majú prístup iba k učebným materiálom, odomknutým �
 Administrátor bude mať prístup ku všetkým úlohám, riešeniam, zozbieraným dátam všetkých použivateľov a ich priemerom. Bude mať aj možnosť manuálne meniť niektoré hodnotenia a odomykať alebo zamykať použivateľom úlohy.
 
 Túto možnosť obchádzať pravidlá administrátorovi dávame pre prípad, že vznikne chyba a používateľovi sa napríklad odomkne úloha ku ktorej nemal mať prístup alebo neodomkne taká, ktorej všetky prerekvizity splnil. Používateľ v prípade takejto chyby bude môcť kontaktovať administrátora, ktorý preverí či naozaj nastala chyba a bude ju môcť napraviť bez debugovania servera, čo môže trvať príliš dlho.
-
-\section{Dokumentácia}
-\label{dokumentacia}
-Django servery sledujú návrhový vzor Model-View-Controller (MVC), kde model je tabuľka
-databázy a view je spôsob zobrazenia (napríklad vo forme HTML stránky). Pre pochopenie
-funkcionality je dôležité vedieť aké modely používame a ako interagujú, preto sa s nimi
-oboznámime. Pri každom modeli spomenieme jeho názov v implementácii a slovenský ekvivalent
-tohto názvu.
-\subsection{Lesson - úloha}
-Úlohy majú tieto polia:
-\begin{itemize}
-\itemsep0em
-\item \textbf{name}: meno úlohy ktoré sa zobrazuje používateľovi.
-\item \textbf{problem}: znenie úlohy.
-\item \textbf{pub\_date}: dátum publikácie úlohy.
-\item \textbf{number}: úroveň úlohy, používateľ musí mať vyriešené všetky povinné úlohy s
-  na nižších úrovniach aby mal k tejto úlohe prístup.
-\item \textbf{optional}: voliteľnosť úlohy. Povinné aj voliteľné úlohy sa odomykajú rovnako, voliteľné
-   ale neodomykajú neskoršie úlohy.
-\item \textbf{inputs}: vstupy na ktorých prebieha testovanie úlohy.
-\item \textbf{correct\_solution}: správne riešenie, oproti ktorému sa budú testovať používateľské
-   riešenia.
-\end{itemize}
-
-Pridávanie úloh je jednoduché - stačí vyplniť polia v administrátorskom prostredí
-a uložiť. Na každej úrovni ale musí byť práve jedna povinná úloha, preto po upravení
-alebo pridaní novej povinnej úlohy sa nasledovným spôsobom upraví poradie:
-
-Najprv sa všetky povinné úlohy posunú tak, aby neboli žiadne medzery v poradí.
-Potom všetky povinné úlohy čo majú úroveň väčšiu alebo rovnú úrovni upravovanej/pridanej
-úlohy sú posunuté o jednu úroveň vyššie (upravovaná/pridaná úloha nie je posunutá).
-Potom sú všetky úlohy znovu posunuté tak aby neboli medzery (pre prípad, že administrátor
-urobil chybu a pridal úlohu s číslom väčším ako má byť najvyššia úroveň, napríklad
-ak je 6 povinných úloh a novej úlohe zadá úroveň 10).
-
-Na úlohy máme tri rôzne pohľady (views): Jeden ktorý vráti všetky úrovne, voliteľnosti a názvy úloh ku ktorým má
-používateľ prístup, druhý meno, znenie a úroveň s voliteľnosťou jednej úlohy a tretí
-iba vstupy alebo skript na stiahnutie (ak používame testovač \ref{testovac1} alebo \ref{testovac2})
-
-\subsection{Submit - riešenie}
-Riešenie ktoré používateľ pošle na server na otestovanie.
-
-Polia:
-\begin{itemize}
-\item \textbf{user}: používateľ ktorý riešenie poslal
-\item \textbf{lesson}: úloha ktorú používateľ rieši týmto riešením
-\item \textbf{submittedFile}: súbor s riešením, ktoré bude odovzdané testovaču
-\item \textbf{result}: výsledok - pravda ak bolo riešenie správne, nepravda ak nebolo
-\end{itemize}
-
-Hneď ako server dostane nové riešenie, spustí testovač a jeho odpoveď uloží v poli
-\textbf{result}. Ak nie je správne, riešenie uložíme a pokračujeme v činnosti ako pred jeho poslaním.
-Ak testovač ale vyhodnotí riešenie ako správne, pred jeho uložením zvýši používateľovu
-úroveň o 1 (ak je úloha povinná) a označí úlohu ako vyriešenú.
-
-\subsection{Comment - komentár}
-Komentár od používateľa na úlohu.
-Polia:
-\begin{itemize}
-\item \textbf{user}: používateľ ktorý vytvoril komentár
-\item \textbf{lesson}: úloha ku ktorej bol komentár pridaný
-\item \textbf{text}: text komentára
-\item \textbf{date}: čas vytvorenia komentára, potrebný na zoraďovanie pri zobrazení
-\end{itemize}
-
-Pri komentároch sa bude zobrazovať aj úroveň autora a to, či úlohu vyriešil.
-Zatiaľ sú všetky komentáre prístupné všetkým používateľom (ak majú prístup k ich úlohe)
-
-Je možné že rozdelíme diskusie pre tých čo úlohu vyriešili a tých čo ešte nie
-alebo povolíme diskusiu iba pre úspešných riešiteľov, aby žiaden používateľ nemohol
-v diskusii prezradiť správne riešenie ostatným používateľom ktorí ešte úlohu nevyriešili.
-
-\subsection{Hint - rada}
-Rada k úlohe, pre prípad že ju používateľ nevie riešiť.
-
-Polia:
-\begin{itemize}
-\item \textbf{lesson}: úloha ku ktorej je táto rada
-\item \textbf{number}: poradové číslo rady
-\item \textbf{text}: text rady
-\end{itemize}
