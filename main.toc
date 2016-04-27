@@ -32,4 +32,6 @@
 \contentsline {subsection}{\numberline {5.1.2}Submit - rie\IeC {\v s}enie}{13}
 \contentsline {subsection}{\numberline {5.1.3}Comment - koment\IeC {\'a}r}{13}
 \contentsline {subsection}{\numberline {5.1.4}Hint - rada}{14}
-\contentsline {chapter}{Z\IeC {\'a}ver}{15}
+\contentsline {subsection}{\numberline {5.1.5}Rating - hodnotenie}{14}
+\contentsline {subsection}{\numberline {5.1.6}LessonStat - \IeC {\v s}tatistika \IeC {\'u}lohy}{15}
+\contentsline {chapter}{Z\IeC {\'a}ver}{16}

@@ -28,7 +28,7 @@ Pri každom modeli spomenieme jeho názov v implementácii a slovenský ekvivale
 Pridávanie úloh je jednoduché - stačí vyplniť polia v administrátorskom prostredí
 a uložiť. Na každej úrovni ale musí byť práve jedna povinná úloha, preto po upravení
 alebo pridaní novej povinnej úlohy sa nasledovným spôsobom upraví poradie
-(funkcia sa zavolá signálom post_save, ktorý sa vykoná po uložení úlohy a nerobí
+(funkcia sa zavolá signálom post\_save, ktorý sa vykoná po uložení úlohy a nerobí
 rozdiel medzi pridávaním novej a upravovaním starej):
 
 Najprv sa všetky povinné úlohy posunú tak, aby neboli žiadne medzery v poradí.
@@ -83,4 +83,44 @@ Polia:
 \item \textbf{lesson}: úloha ku ktorej je táto rada
 \item \textbf{number}: poradové číslo rady
 \item \textbf{text}: text rady
+\end{itemize}
+
+\subsection{Rating - hodnotenie}
+Hodnotenie úlohy v kategóriach zložitosti a zábavnosti.
+
+Polia:
+\begin{itemize}
+\item \textbf{user}: používateľ ktorý zaslal toto hodnotenie
+\item \textbf{lesson}: úloha ktorú hodnotil
+\item \textbf{fun}: hodnotenie zaujímavosti
+\item \textbf{difficulty}: hodnotenie zložitosti
+\end{itemize}
+
+Pre každú dvojicu \textbf{úloha-používateľ} môže existovať iba jedno hodnotenie,
+čo znamená že každý používateľ môže ohodnotiť každú úlohu iba raz.
+
+Kým používateľ nevyriešil úlohu, prehliadač mu nezobrazí formulár na hodnotenie,
+preto by nemal mať spôsob ako poslať hodnotenie úlohy ktorú nevyriešil.
+Napriek tomu, zavedieme opatrenie proti
+možnosti manuálne poslať požiadavku a tým obísť podmienku správneho vyriešenia úlohy:
+pred uložením hodnotenia overíme aj na servri či používateľ úlohu správne vyriešil.
+Ak a mu to ešte nepodarilo, ako odpoveď na poslanie hodnotenia dostane chybu UNAUTHORIZED.
+
+ Ak sa mu ale podarilo úlohu predtým
+vyriešiť, vytvoríme nové alebo upravíme existujúce hodnotenie a obnovíme model LessonStat (\ref{modelLessonStat})
+aby mal aktuálne dáta.
+\subsection{LessonStat - štatistika úlohy}
+\label{modelLessonStat}
+Model ktorý zbiera štatistické dáta o úlohe, ktoré budú neskôr spracované a ukázané administrátorovi.
+K tomuto modelu má prístup iba administrátor.
+
+Polia:
+\begin{itemize}
+\item \textbf{lesson}: úloha ku ktorej štatistika patrí
+\item \textbf{avg\_fun}: priemerné hodnotenie zaujímavosti
+\item \textbf{avg\_diff}: priemerné hodnotenie zložitosti
+\item \textbf{good\_solutions}: počet používateľov ktorí úlohu správne vyriešili
+  (nie počet správnych riešení, pretože účelom tohto poľa je pomôcť zistiť koľko riešení
+  používatelia skúšajú pred správnym vyriešením)
+\item \textbf{bad\_solutions}: počet zlých riešení úlohy pred správnym vyriešením úlohy
 \end{itemize}
