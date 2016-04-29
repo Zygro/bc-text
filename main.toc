@@ -8,30 +8,34 @@
 \contentsline {subsection}{\numberline {2.1.3}Bodovanie a rebr\IeC {\'\i }\IeC {\v c}ek}{4}
 \contentsline {subsection}{\numberline {2.1.4}Hodnotenie \IeC {\'u}loh}{4}
 \contentsline {subsection}{\numberline {2.1.5}Diskusia}{4}
-\contentsline {section}{\numberline {2.2}Prostredie}{4}
-\contentsline {chapter}{\numberline {3}\IeC {\v D}al\IeC {\v s}ie funkcie}{5}
-\contentsline {chapter}{\numberline {4}Server}{6}
-\contentsline {section}{\numberline {4.1}Pou\IeC {\v z}it\IeC {\'e} technol\IeC {\'o}gie}{6}
-\contentsline {subsection}{\numberline {4.1.1}Django 1.9}{6}
-\contentsline {subsection}{\numberline {4.1.2}REST framework}{6}
-\contentsline {section}{\numberline {4.2}Testova\IeC {\v c}}{7}
-\contentsline {subsection}{\numberline {4.2.1}Stiahnutie vstupov a poslanie v\IeC {\'y}stupov}{7}
-\contentsline {subsection}{\numberline {4.2.2}Testovanie skriptom u pou\IeC {\v z}ivate\IeC {\v l}a}{7}
-\contentsline {subsection}{\numberline {4.2.3}Testovanie na servri}{8}
-\contentsline {section}{\numberline {4.3}Bezpe\IeC {\v c}nos\IeC {\v t}}{8}
-\contentsline {subsection}{\numberline {4.3.1}Autoriz\IeC {\'a}cia}{8}
-\contentsline {subsection}{\numberline {4.3.2}Prihlasovanie cez extern\IeC {\'e} port\IeC {\'a}ly}{8}
-\contentsline {subsection}{\numberline {4.3.3}Protokoly}{9}
-\contentsline {section}{\numberline {4.4}Administr\IeC {\'a}cia}{9}
-\contentsline {subsection}{\numberline {4.4.1}Prid\IeC {\'a}vanie a hodnotenie \IeC {\'u}loh}{9}
-\contentsline {subsection}{\numberline {4.4.2}Zbieranie d\IeC {\'a}t o pou\IeC {\v z}ivate\IeC {\v l}och}{10}
-\contentsline {subsection}{\numberline {4.4.3}Opr\IeC {\'a}vnenia pou\IeC {\v z}ivate\IeC {\v l}a a administr\IeC {\'a}tora}{10}
-\contentsline {chapter}{\numberline {5}Dokument\IeC {\'a}cia}{12}
-\contentsline {section}{\numberline {5.1}Modely}{12}
-\contentsline {subsection}{\numberline {5.1.1}Lesson - \IeC {\'u}loha}{12}
-\contentsline {subsection}{\numberline {5.1.2}Submit - rie\IeC {\v s}enie}{13}
-\contentsline {subsection}{\numberline {5.1.3}Comment - koment\IeC {\'a}r}{13}
-\contentsline {subsection}{\numberline {5.1.4}Hint - rada}{14}
-\contentsline {subsection}{\numberline {5.1.5}Rating - hodnotenie}{14}
-\contentsline {subsection}{\numberline {5.1.6}LessonStat - \IeC {\v s}tatistika \IeC {\'u}lohy}{15}
-\contentsline {chapter}{Z\IeC {\'a}ver}{16}
+\contentsline {section}{\numberline {2.2}Prostredie}{5}
+\contentsline {subsection}{\numberline {2.2.1}Z\IeC {\'a}kladn\IeC {\'e} str\IeC {\'a}nky}{5}
+\contentsline {subsection}{\numberline {2.2.2}Detail \IeC {\'u}lohy}{5}
+\contentsline {chapter}{\numberline {3}\IeC {\v D}al\IeC {\v s}ie funkcie}{6}
+\contentsline {chapter}{\numberline {4}Server}{7}
+\contentsline {section}{\numberline {4.1}Pou\IeC {\v z}it\IeC {\'e} technol\IeC {\'o}gie}{7}
+\contentsline {subsection}{\numberline {4.1.1}Django 1.9}{7}
+\contentsline {subsection}{\numberline {4.1.2}REST framework}{7}
+\contentsline {section}{\numberline {4.2}Testova\IeC {\v c}}{8}
+\contentsline {subsection}{\numberline {4.2.1}Stiahnutie vstupov a poslanie v\IeC {\'y}stupov}{8}
+\contentsline {subsection}{\numberline {4.2.2}Testovanie skriptom u pou\IeC {\v z}ivate\IeC {\v l}a}{8}
+\contentsline {subsection}{\numberline {4.2.3}Testovanie na servri}{9}
+\contentsline {section}{\numberline {4.3}Bezpe\IeC {\v c}nos\IeC {\v t}}{9}
+\contentsline {subsection}{\numberline {4.3.1}Autoriz\IeC {\'a}cia}{9}
+\contentsline {subsection}{\numberline {4.3.2}Prihlasovanie cez extern\IeC {\'e} port\IeC {\'a}ly}{9}
+\contentsline {subsection}{\numberline {4.3.3}Protokoly}{10}
+\contentsline {section}{\numberline {4.4}Administr\IeC {\'a}cia}{10}
+\contentsline {subsection}{\numberline {4.4.1}Prid\IeC {\'a}vanie a hodnotenie \IeC {\'u}loh}{10}
+\contentsline {subsection}{\numberline {4.4.2}Zbieranie d\IeC {\'a}t o pou\IeC {\v z}ivate\IeC {\v l}och}{11}
+\contentsline {subsection}{\numberline {4.4.3}Opr\IeC {\'a}vnenia pou\IeC {\v z}ivate\IeC {\v l}a a administr\IeC {\'a}tora}{11}
+\contentsline {chapter}{\numberline {5}Dokument\IeC {\'a}cia}{13}
+\contentsline {section}{\numberline {5.1}Modely}{13}
+\contentsline {subsection}{\numberline {5.1.1}Lesson - \IeC {\'u}loha}{13}
+\contentsline {subsection}{\numberline {5.1.2}Submit - rie\IeC {\v s}enie}{14}
+\contentsline {subsection}{\numberline {5.1.3}Comment - koment\IeC {\'a}r}{14}
+\contentsline {subsection}{\numberline {5.1.4}Hint - rada}{15}
+\contentsline {subsection}{\numberline {5.1.5}Rating - hodnotenie}{15}
+\contentsline {subsection}{\numberline {5.1.6}LessonStat - \IeC {\v s}tatistika \IeC {\'u}lohy}{16}
+\contentsline {subsection}{\numberline {5.1.7}UserStat - \IeC {\v s}tatistika pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}a}{16}
+\contentsline {subsection}{\numberline {5.1.8}UserLessonWrapper - obal pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}-\IeC {\'u}loha}{16}
+\contentsline {chapter}{Z\IeC {\'a}ver}{17}

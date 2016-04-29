@@ -1,11 +1,14 @@
 \chapter{Dokumentácia}
 \label{kap:doc}
+V tejto kapitole sa pozrieme na našu implementáciu návrhu portálu. Oboznámime sa
+s modelmi, pohľadmi a niektorými funkciami a ich konkrétnymi možnosťami a použitím.
+\section{Modely}
+\label{modely}
 Django servery sledujú návrhový vzor Model-View-Controller (MVC), kde model je tabuľka
 databázy a view je spôsob zobrazenia (napríklad vo forme HTML stránky). Pre pochopenie
 funkcionality je dôležité vedieť aké modely a pohľady používame a ako medzi sebou interagujú,
 preto sa s nimi oboznámime.
-\section{Modely}
-\label{modely}
+
 Tu sa oboznámime s dôležitými modelmi, teda tabuľkami databázy.
 Pri každom modeli spomenieme jeho názov v implementácii a slovenský ekvivalent tohto názvu.
 \subsection{Lesson - úloha}
@@ -56,7 +59,7 @@ Polia:
 Hneď ako server dostane nové riešenie, spustí testovač a jeho odpoveď uloží v poli
 \textbf{result}. Ak nie je správne, riešenie uložíme a pokračujeme v činnosti ako pred jeho poslaním.
 Ak testovač ale vyhodnotí riešenie ako správne, pred jeho uložením zvýši používateľovu
-úroveň o 1 (ak je úloha povinná) a označí úlohu ako vyriešenú.
+úroveň o 1 (ak je úloha povinná) a označí úlohu ako vyriešenú v modeli \textbf{UserLessonWrapper} (\ref{modelWrapper}).
 
 \subsection{Comment - komentár}
 Komentár od používateľa na úlohu.
@@ -71,9 +74,6 @@ Polia:
 Pri komentároch sa bude zobrazovať aj úroveň autora a to, či úlohu vyriešil.
 Zatiaľ sú všetky komentáre prístupné všetkým používateľom (ak majú prístup k ich úlohe)
 
-Je možné že rozdelíme diskusie pre tých čo úlohu vyriešili a tých čo ešte nie
-alebo povolíme diskusiu iba pre úspešných riešiteľov, aby žiaden používateľ nemohol
-v diskusii prezradiť správne riešenie ostatným používateľom ktorí ešte úlohu nevyriešili.
 
 \subsection{Hint - rada}
 Rada k úlohe, pre prípad že ju používateľ nevie riešiť.
@@ -84,6 +84,11 @@ Polia:
 \item \textbf{number}: poradové číslo rady
 \item \textbf{text}: text rady
 \end{itemize}
+
+Používateľovi sa pri zobrazení úlohy ukazujú iba toľko rád koľko si požiadal. Táto
+informácia sa ukladá v modeli \textbf{UserLessonWrapper} (\ref{modelWrapper}).
+Používateľ môže požiadať o ďalšiu radu a kým existuje nepoužitá rada, zväčšíme
+číslo použitých rád v \textbf{UserLessonWrapper}-i a odpovieme novým, o jednu randu dlhším zoznamom rád.
 
 \subsection{Rating - hodnotenie}
 Hodnotenie úlohy v kategóriach zložitosti a zábavnosti.
@@ -107,7 +112,7 @@ pred uložením hodnotenia overíme aj na servri či používateľ úlohu správ
 Ak a mu to ešte nepodarilo, ako odpoveď na poslanie hodnotenia dostane chybu UNAUTHORIZED.
 
  Ak sa mu ale podarilo úlohu predtým
-vyriešiť, vytvoríme nové alebo upravíme existujúce hodnotenie a obnovíme model LessonStat (\ref{modelLessonStat})
+vyriešiť, vytvoríme nové alebo upravíme existujúce hodnotenie a obnovíme model \textbf{LessonStat} (\ref{modelLessonStat})
 aby mal aktuálne dáta.
 \subsection{LessonStat - štatistika úlohy}
 \label{modelLessonStat}
@@ -124,3 +129,32 @@ Polia:
   používatelia skúšajú pred správnym vyriešením)
 \item \textbf{bad\_solutions}: počet zlých riešení úlohy pred správnym vyriešením úlohy
 \end{itemize}
+
+\subsection{UserStat - štatistika používateľa}
+\label{modelWrapper}
+V momentálnej implementácii zbierame iba jeden údaj pre používateľov, ktorý ale používame
+na zisťovanie, ktoré úlohy používateľovi sprístupniť. Narozdiel od modelu \textbf{LessonStat} (\ref{modelLessonStat}),
+táto štatistika je prístupná používateľovi a aj ostatným používateľom, ak je ochotný zverejniť svoje
+meno v rebríčku (\ref{score})
+
+Polia:
+\begin{itemize}
+\item \textbf{user}: používateľ
+\item \textbf{progress}: úroveň používateľa - počet správne vyriešených povinných úloh
+\end{itemize}
+
+\subsection{UserLessonWrapper - obal používateľ-úloha}
+Model na určovanie postupu používateľa jednou úlohou. Používa sa iba na vnútorné
+overovanie prístupu používateľa k niektorým modelom. Tento model je unikátny pre ka
+
+Polia:
+\begin{itemize}
+\item \textbf{user}: používateľ
+\item \textbf{lesson}: úroveň používateľa - počet správne vyriešených povinných úloh
+\item \textbf{hints\_used}: počet použitých rád k úlohe
+\item \textbf{completed}: či používateľ správne vyriešil úlohu
+\end{itemize}
+
+Tento model sprístupníme administrátorovi na upravovanie, pretože chceme mať možnosť
+opravovať nepredvídané chyby (napríklad ak používateľ pošle správne riešenie ale
+úloha sa mu neoznačí za vyriešenú).

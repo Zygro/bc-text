@@ -2,8 +2,8 @@
 
 \label{kap:server}
 
-V tejto kapitole sa oboznámime s vnútorným fungovaním servera, používaných bezpečnostných protokoloch
-a možnosťami poskytovanými administrátorovi.
+V tejto kapitole sa oboznámime s návrhom a špecifikáciami vnútorného fungovania servera,
+bezpečnostných protokoloch a možnosťami poskytovanými administrátorovi.
 
 \section{Použité technológie}
 
@@ -69,12 +69,12 @@ Nakoľko pri tomto testovači je najťažšie mať správne výsledky v časovom
 Portál používa token autentifikáciu ktorá z pohľadu používateľa vyzerá nasledovne:
 
 Používateľ pri prihlasovaní pošle prihlasovacie meno a heslo (tento krok je iný pri prihlasovaní cez externú doménu) a ako odpoveď
-dostane náhodne vygenerovaný reťazec o dĺžke približne 40 znakov. Potom všetky požiadavky na použivateľove dáta
+dostane náhodne vygenerovaný reťazec o dĺžke približne 40 znakov. Potom všetky požiadavky, pre ktoré server overuje totožnosť používateľa
  musia v hlavičke uviesť tento token, inak budú zamietnuté.
-Server si pamätá použivateľov token až kým sa použivateľ neodhlási alebo mu nevyprší platnosť po dlhšej neaktivite.
+Server si pamätá používateľov token až kým sa použivateľ neodhlási alebo mu nevyprší platnosť po dlhšej neaktivite.
 
-Všetky požiadavky musia obsahovať token, čo pomáha použivateľa chrániť napríklad pred CSRF útokom. Narozdiel od cookies,
-prehliadač nepridáva token do hlavičky automaticky a teda väčšina CSRF útokov bude zamietnutých.
+Všetky požiadavky musia obsahovať token (buď používateľov alebo CSRF token),
+čo pomáha použivateľa chrániť pred CSRF útokom.
 
 \subsection{Prihlasovanie cez externé portály}
 \label{oAuth}

@@ -51,12 +51,42 @@ ako ostatní používatelia. Jediná zmena je, že sa nezobrazuje v rebríčkoch
 \subsection{Hodnotenie úloh}
 \label{rating}
 Používatelia mau možnosť po správnom vyriešení úlohu ohodnotiť.
+
 Budú mať možnosť (ale nie povinnosť) ohodnotiť jej obtiažnosť a
 zaujímavosť na stupnici od 1 do 5. Tieto hodnotenia sa budú priemerovať a ich priemery
-budú prístupné iba administrátorovi.
+budú prístupné iba administrátorovi. Každé hodnotenie bude prístupné iba používateľovi ktorý
+ho vytvoril a administrátorovi.
 
 \subsection{Diskusia}
-Každá úloha má diskusiu, v ktorej je možné rozoberať a
+Každá úloha má diskusiu, v ktorej je možné rozoberať úlohu.
+V momentálnom návrhu je celá diskusia prístupná všetkým používateľom ktorí majú
+prístup k úlohe, z čoho ale môže vzniknúť problém prezrádzania správnych riešenie
+ostatným používateľom, ktorí ešte úlohu nevyriešili
+
+Ak tento problém vznikne, budeme musieť rozdeliť diskusiu na dve: pre tých používateľov, čo úlohu vyriešili a pre tých čo ešte nie.
+
+Ak budú stále pretrvávať problémy (napríklad používateľ prezradí riešenie skôr ako ho odovzdá na testovanie),
+môžme povoliť diskusiu iba pre úspešných riešiteľov.
+
+Toto riešenie ale môže byť v rozpore s účelom diskusie, nakoľko sa môže stať, že používatelia sa po vyriešení úlohy
+o ňu prestanú zaujímať. Preto riešenie tohto problému zatiaľ necháme na administrátorovi, aby zmazal všetky diskusné
+príspevky s radami, ktoré príliš zjednodušujú úlohu a iným nevhodným obsahom.
 \section{Prostredie}
 Predstavíme jednotlivé stránky ku ktorým má používateľ prístup a aké
-funkcie
+funkcie ktoré poskytujú
+
+\subsection{Základné stránky}
+Portál obsahuje stránky na registráciu nových používateľov, prihlásenie, zoznam úloh a
+používateľov profil ktoré sú jednoduché a ich funkcia evidentná, preto ich iba spomenieme
+bez podrobného popisu.
+
+\subsection{Detail úlohy}
+Stránka ktorá zobrazuje jednu úlohu: jej názov, zadanie, rady o ktoré používateľ požiadal, hodnotenie jeho riešení
+generované testovačom a nasledujúce možnosti:
+\begin{itemize}
+  \item stiahnuť vstupné dáta alebo testovací skript - poskytnutie tejto možnosti závisí od implementácie testovača (\ref{testovace})
+  \item odovzdať riešenie na otestovanie
+  \item po správnom vyriešení úlohy ju ohodnotiť (\ref{rating})
+  \item zobraziť diskusiu a pridať komentár
+  \item požiadať o ďalšiu radu
+\end{itemize}
