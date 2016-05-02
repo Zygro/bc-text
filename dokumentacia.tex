@@ -11,6 +11,9 @@ preto sa s nimi oboznámime.
 
 Tu sa oboznámime s dôležitými modelmi, teda tabuľkami databázy.
 Pri každom modeli spomenieme jeho názov v implementácii a slovenský ekvivalent tohto názvu.
+
+(Každý model obsahuje aj pole id, čo je jedinečné identifikačné číslo automaticky generované
+Django frameworkom)
 \subsection{Lesson - úloha}
 \label{doc:lesson}
 Úlohy majú tieto polia:
@@ -45,6 +48,25 @@ Na úlohy máme tri rôzne pohľady (views): Jeden ktorý vráti všetky úrovne
 používateľ prístup, druhý meno, znenie a úroveň s voliteľnosťou jednej úlohy a tretí
 iba vstupy alebo skript na stiahnutie (ak používame testovač \ref{testovac1} alebo \ref{testovac2})
 
+\subsection{User - používateľ}
+Model s osobnými údajmi používateľa
+
+Polia:
+\begin{itemize}
+\item \textbf{username}: prezývka používateľa, nutná na registráciu a prihlásenie, jedinečná
+\item \textbf{email}: emailová adresa používateľa, tiež nutná a jedinečná
+\item \textbf{password}: heslo používateľa, ukladané pomocou hash funkcie poskytovanej
+                        REST frameworkom
+\item \textbf{first\_name}: prvé meno používateľa, nepovinné
+\item \textbf{last\_name}: priezvisko používateľa, taktiež nepovinné
+\end{itemize}
+
+Pri vytvorení nového používateľa sa automaticky vytvorí jeho \textbf{UserStat} (\ref{modelUserStat})
+\newline
+Tu takisto môžem spomenúť model \textbf{Token}, ktorý má polia \textbf{user} a \textbf{key}.
+\textbf{Token} je používaný pri autorizácii (\ref{authorization}) a je vygenerovaný
+pri každom prihlásení a zmazaný pri odhlásení.
+\newpage
 \subsection{Submit - riešenie}
 Riešenie ktoré používateľ pošle na server na otestovanie.
 
@@ -131,7 +153,7 @@ Polia:
 \end{itemize}
 
 \subsection{UserStat - štatistika používateľa}
-\label{modelWrapper}
+\label{modelUserStat}
 V momentálnej implementácii zbierame iba jeden údaj pre používateľov, ktorý ale používame
 na zisťovanie, ktoré úlohy používateľovi sprístupniť. Narozdiel od modelu \textbf{LessonStat} (\ref{modelLessonStat}),
 táto štatistika je prístupná používateľovi a aj ostatným používateľom, ak je ochotný zverejniť svoje
@@ -144,6 +166,7 @@ Polia:
 \end{itemize}
 
 \subsection{UserLessonWrapper - obal používateľ-úloha}
+\label{modelWrapper}
 Model na určovanie postupu používateľa jednou úlohou. Používa sa iba na vnútorné
 overovanie prístupu používateľa k niektorým modelom. Tento model je unikátny pre ka
 
@@ -158,3 +181,10 @@ Polia:
 Tento model sprístupníme administrátorovi na upravovanie, pretože chceme mať možnosť
 opravovať nepredvídané chyby (napríklad ak používateľ pošle správne riešenie ale
 úloha sa mu neoznačí za vyriešenú).
+
+\section{Testovač a ďalšie pomocné funkcie}
+\subsection{Testovač}
+Momentálna verzia testovača implementuje najjednoduchší prístup (\ref{testovac1})
+
+Testovač prijíma iba súbory zabalené v .zip formáte.
+Potom postupuje nasledovne:
