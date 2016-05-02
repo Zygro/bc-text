@@ -90,3 +90,31 @@ generované testovačom a nasledujúce možnosti:
   \item zobraziť diskusiu a pridať komentár
   \item požiadať o ďalšiu radu
 \end{itemize}
+
+\subsection{Vizualizácia rekurzívnych výpočtov}
+Jedna z najťažších častí učenia sa dynamického programovania je pochopenie rekurzívnych funkcií.
+Preto náš portál bude poskytovať možnosť ako si v prehľadnej forme zobraziť výpočet ľubovoľnej
+rekurzívnej funkcie.
+
+Na stránke vizualizácie si používateľ bude môcť napísať svoju funkciu, ktorej stránka vytvorí
+a zobrazí strom výpočtu. Každý vrchol bude jedno zavolanie funkcie a bude ukazovať všetky argumenty.
+
+Vrcholy budú vykresľované postupne, podľa poradia zavolania. Návratová hodnota zavolania
+sa zobrazí hneď, ak funkcia samú seba ďalej nevolá, alebo až keď všetci potomkovia jej vrchola v strome
+majú zobrazenú hodnotu (aby používateľ lepšie videl, ako postupoval výpočet a v ktorom momente
+boli spočítané ktoré návratové hodnoty).
+
+Vizualizácia vie ale pracovať aj s memoizáciou, čiže pamätaním si návratových hodnôt pre
+argumenty a odpovedanie z pamäte pri každom ďalšom zavolaní funkcie s rovnakými argumentmi.
+Pri výpočte s memoizáciou budeme zobrazovať aj pamäť a v prípade zavolania funckie s argumentmi,
+pre ktoré hodnotu už poznáme, ukážeme aj na vrchol, kde bola hodnota prvý krát vypočítaná.
+
+Aj pre túto stránku si uvedieme možnosti, ktoré ponúka používateľovi:
+\begin{itemize}
+  \item vybrať si, či výpočet bude používať memoizáciu alebo nie
+  \item vyhodnotiť zadanú funkciu a spustiť vizualizáciu jej výpočtu
+  \item zastaviť/znova spoustiť vizualizáciu
+  \item krokovať vizualizáciu dopredu alebo dozadu (pri krokovaní vizualizáciu
+   automaticky zastavíme)
+  \item vykresliť celý strom výpočtu alebo začať vizualizáciu odznova
+\end{itemize}
