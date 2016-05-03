@@ -183,24 +183,31 @@ Polia:
 Tento model sprístupníme administrátorovi na upravovanie, pretože chceme mať možnosť
 opravovať nepredvídané chyby (napríklad ak používateľ pošle správne riešenie ale
 úloha sa mu neoznačí za vyriešenú).
-
-\section{Testovač a ďalšie pomocné funkcie}
-\subsection{Testovac}
-\begin{lstlisting}
-0
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+\newpage
+\protect\section{Testovač a ďalšie pomocné funkcie}
+Testovač je v prvej pracovnej verzii implementovaný podľa najjednoduchšieho prístupu \ref{testovac1}
+\subsection{Testovač}
+Uvedieme si kód testovača a potom si ho aj vysvetlíme.
+\lstset{
+language=Python,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false            %
+}
+\begin{lstlisting}[language=Python]
+  def compare_files(correctFile, submitFile):
+      correct = zipfile.ZipFile(correctFile)
+      submit = zipfile.ZipFile(submitFile)
+      if len(correct.namelist()) != len(submit.namelist()):
+          return "Wrong file structure"
+      for name in submit.namelist():
+          if name not in correct.namelist():
+              return "Wrong file structure"
+          if submit.read(name) != correct.read(name):
+              return "Wrong answer"
+      return "OK"
 \end{lstlisting}
-\label{testovacImplemetacia}
-Momentálna verzia testovača implementuje najjednoduchší prístup (\ref{testovac1})
-
-Testovač prijíma iba súbory zabalené v .zip formáte.
-Potom postupuje nasledovne:
