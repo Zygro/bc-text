@@ -33,16 +33,9 @@ Django frameworkom)
 
 Pridávanie úloh je jednoduché - stačí vyplniť polia v administrátorskom prostredí
 a uložiť. Na každej úrovni ale musí byť práve jedna povinná úloha, preto po upravení
-alebo pridaní novej povinnej úlohy sa nasledovným spôsobom upraví poradie
-(funkcia sa zavolá signálom post\_save, ktorý sa vykoná po uložení úlohy a nerobí
-rozdiel medzi pridávaním novej a upravovaním starej):
-
-Najprv sa všetky povinné úlohy posunú tak, aby neboli žiadne medzery v poradí.
-Potom všetky povinné úlohy čo majú úroveň väčšiu alebo rovnú úrovni upravovanej/pridanej
-úlohy sú posunuté o jednu úroveň vyššie (upravovaná/pridaná úloha nie je posunutá).
-Potom sú všetky úlohy znovu posunuté tak aby neboli medzery (pre prípad, že administrátor
-urobil chybu a pridal úlohu s číslom väčším ako má byť najvyššia úroveň, napríklad
-ak je 6 povinných úloh a novej úlohe zadá úroveň 10).
+alebo pridaní novej povinnej úlohy sa poradie upraví tak, aby pridaná alebo zmenená úloha mala
+po uložení číslo, aké jej administrátor zadal. Viac si o spôsobe zarovnania úloh povieme v časti
+\ref{implementacia:posuvanie}
 
 Na úlohy máme tri rôzne pohľady (views): Jeden ktorý vráti všetky úrovne, voliteľnosti a názvy úloh ku ktorým má
 používateľ prístup, druhý meno, znenie a úroveň s voliteľnosťou jednej úlohy a tretí
@@ -184,9 +177,12 @@ Tento model sprístupníme administrátorovi na upravovanie, pretože chceme ma�
 opravovať nepredvídané chyby (napríklad ak používateľ pošle správne riešenie ale
 úloha sa mu neoznačí za vyriešenú).
 
-\protect\section{Testovač a ďalšie pomocné funkcie}
-Testovač je v prvej pracovnej verzii implementovaný podľa najjednoduchšieho prístupu \ref{testovac1}
+\protect\section{Pomocné funkcie}
+Teraz si popíšeme implementáciu automatického testovača a zarovnávania pridaných úloh, pretože obe sú dôležité
+funkcie, ktoré by sme mali ovládať.
 \subsection{Testovač}
+Testovač je v prvej pracovnej verzii implementovaný podľa najjednoduchšieho prístupu \ref{testovac1}
+
 Uvedieme si popis kódu testovača a potom si ho aj uvedieme.
 
 Tento testovač otvorí používateľove a správne riešenie úlohy ako .zip súbor.
@@ -199,14 +195,16 @@ používateľovom a správnom riešení, vyhodnotí riešenie za nesprávne.
 Ak všetky súbory z používateľovho riešenia prejdú týmito testami, vieme povedať,
 že všetky súbory sa zhodovali s tými v správnom riešení a teda riešenie je správne.
 \lstset{
-language=Python,
+frame=single,
 otherkeywords={self},             % Add keywords here
 keywordstyle=\color{deepblue},
 emph={MyClass,__init__},          % Custom highlighting
 emphstyle=\color{deepred},    % Custom highlighting style
 stringstyle=\color{deepgreen},
 frame=tb,                         % Any extra options here
-showstringspaces=false            %
+showstringspaces=false,            %
+breaklines=true,
+postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
 }
 \begin{lstlisting}[language=Python]
   def compare_files(correctFile, submitFile):
@@ -227,3 +225,64 @@ preto je na autorovi úlohy aby v zadaní popísal správny formát riešenia.
 
 My odporúčame ako konvenciu používanie vstupných súborov s príponou .in a výstupov
 s rovnakým menom, ale príponou .out (napríklad vstupný súbor 01.a.in a výstupný 01.a.out)
+
+\subsection{Posúvanie úloh}
+\label{implementacia:posuvanie}
+Každá úroveň úloh musí mať presne jednu povinnú úlohu. Keďže chceme, aby administrátor
+nemusel úlohy posúvať sám pred pridaním novej alebo pred presunutím existujúcej na inú úroveň,
+tento proces zarovnávania si automatizujeme.
+
+Prejdeme tieto kroky:
+\begin{itemize}
+\item Všetky povinné úlohy posunieme tak, aby neboli žiadne medzery v poradí.
+\item všetky povinné úlohy čo majú úroveň väčšiu alebo rovnú úrovni upravovanej/pridanej
+ úlohy posununieme o jednu úroveň vyššie (upravovaná/pridaná úloha nie je posunutá).
+\item všetky úlohy znovu posununieme tak, aby sme vyplnili medzery (pretože predošlý krok mohol
+    vytvoriť nové medzery ak presúvame existujúcu úlohu na vyššiu úroveň)
+\item nakoniec pridáme ukladanú úlohu a zarovnáme ju tiež, nakoľko administrátor mohol urobiť chybu a pridať úlohu
+    s číslom väčším ako počet povinných úloh a teda by bola nedosiahnuteľná.
+\end{itemize}
+
+\begin{lstlisting}[language=Python]
+def PushOtherLessons (sender, instance, *args, **kwargs):
+  if not(instance.optional):
+    rank = instance.number
+    non_optionals = [x for x in Lesson.objects.all().order_by('number')
+      if not(x.optional) and x.id!=instance.id]
+    #fill the gaps
+    for l in non_optionals:
+      while len(Lesson.objects.filter(number = (l.number-1)))==0 and l.number>1:
+        Lesson.objects.filter(id=l.id).update(number = l.number-1)
+        l.number -= 1
+        print(l)
+    #push later lessons one level up
+    if len(Lesson.objects.filter(number=rank))>0:
+      Lesson.objects.filter(number__gte = rank, optional=False).exclude(id=instance.id).update(number = F('number')+1)
+    non_optionals = [x for x in Lesson.objects.all().order_by('number') if not(x.optional) and x.id!=instance.id]
+    #fill the gaps again
+    for l in non_optionals:
+      while len(Lesson.objects.filter(number = (l.number-1)))==0 and l.number>1:
+        Lesson.objects.filter(id=l.id).update(number = l.number-1)
+        l.number -= 1
+    #adjust saved lesson
+    while len(Lesson.objects.filter(number = (instance.number-1)))==0 and instance.number>1:
+      Lesson.objects.filter(id=instance.id).update(number = instance.number-1)
+      instance.number -= 1
+post_save.connect(PushOtherLessons, sender=Lesson)
+\end{lstlisting}
+
+Vypĺňanie medzier sa uskutočňuje pomocou \lstinline[language=Python]{while} cyklu,
+v ktorom dekrementujeme úroveň zarovnávanej úlohy, až kým nenarazíme na prvú povinnú úlohu ktorá má
+úroveň o 1 menšiu ako práve zarovnávaná úloha. Vtedy cyklus skončíme a môžme si byť istí,
+že po túto úlohu žiadne medzery neexistujú.
+
+Na ukladanie zmien používame metódu \lstinline[language=Python]{Lesson.update()} miesto
+\lstinline[language=Python]{Lesson.save()} pretože \lstinline[language=Python]{Lesson.save()} zavolá
+\lstinline[language=Python]{post_save} signál, ktorý by spustil proces zarovnávania, ktorý by tiež
+spustil ďalší proces zarovnávania a funkcia by nikdy neskončila.
+
+Ako nové číslo úlohy v metóde \lstinline[language=Python]{Lesson.update()} používame pri posúvaní úloh hore výraz F,
+konkrétne \lstinline[language=Python]{F('number')}. Tento výraz F nám dovoľuje získať hodnotu
+poľa práve obnovovaného objektu bez toho, aby sme mu priradili premennú čím skracujeme
+a sprehľadňujeme kód. V ostatných prípadoch výraz F nie je potrebný, pretože už máme
+obnovovanú úlohu označenú premennou l alebo instance.
