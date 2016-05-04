@@ -9,7 +9,7 @@
   comment=[l]{//},
   morecomment=[s]{/*}{*/},
   commentstyle=\color{darkgray}\ttfamily,
-  stringstyle=\color{red}\ttfamily,
+  stringstyle=\color{deepgreen}\ttfamily,
   morestring=[b]',
   morestring=[b]"
 }
@@ -45,11 +45,23 @@ V prvej pracovnej verzii sú implementované tieto stránky (uvedené s URL adre
   \item administrátorské prostredie - \textit{/admin/}
 \end{itemize}
 
-Administrátorské prostredie je predvolené prostredie Django frameworku bez modifikácií a je
-samozrejme prístupné iba prihláseným administrátorom.
+Administrátorské prostredie je predvolené prostredie Django frameworku bez modifikácií.
+Toto prostredie poskytuje všetky požadované možnosti (prezeranie, pridávanie, úprava
+a mazanie objektov) vo veľmi prehľadnej a jednoduchej forme.
 \subsection{Komunikácia so servrom}
-Na komunikáciu so servrom používame hlavne knižnicu jQuery, kvôli jej jednoduchému
-používaniu a podpore pridania autorizačnej hlavičky. Typická požiadavka vyzerá takto:
+Na komunikáciu so servrom používame hlavne knižnicu jQuery, konkrétne asynchronickú metódu AJAX, kvôli jej jednoduchému
+používaniu a podpore pridania autorizačnej hlavičky. Autorizačná hlavička
+je údaj v hlavičke HTTP požiadavky ktorý určuje totožnosť používateľa, v našom prípade napríklad
+\lstinline[language=Javascript]|{'Authorization': 'Token a5b498587e33d1f44a97c2328618dd15373b0705'}|.
+
+Tento token dostaneme ako odpoveď na prihlasovaciu požiadavku a uložíme si ho
+v lokálnej pamäti prehliadača pomocou zavolania
+\lstinline[language=Javascript]|localStorage|, konkrétne takto:\newline
+\lstinline[language=Javascript]|localStorage.setItem('token', response['token'])|.
+Potom token môžme kedykoľvek získať pomocou zavolania metódy
+\lstinline[language=Javascript]|getItem()|.
+Väčšina požiadaviek ktoré posielame na server sú si veľmi podobné, preto uvedieme
+iba jednu typickú požiadavku:
 
 \begin{lstlisting}[ language = Javascript, title = Požiadavka na získanie zadania jednej úlohy]
 $.ajax({
@@ -69,10 +81,45 @@ $.ajax({
    }
 });
 \end{lstlisting}
-(v tomto príklade je požiadavka trochu zmenená oproti implementácii, aby bola v texte
-prehľadnejšia)
+\textit{(v tomto príklade je požiadavka trochu zmenená oproti implementácii, aby bola v texte
+prehľadnejšia)}
+\newline
 
+Tento a viacero iných podobných požiadavok posielame vždy pri načítaní stránky
+prehliadačom, aby sme získali dáta ktoré chceme zobraziť.
 
-Teraz si vysvetlíme niektoré časti tohto kódu:
+Teraz si vysvetlíme niektoré časti tohto kódu:\newline
+V druhom riadku používame premennú id, ktorá označuje unikátne identifikačné číslo
+úlohy. Toto číslo získame z URL zobrazenej stránky ako prvú vec pri načítaní.
 
-V druhom riadku používame premennú id, ktorá
+Vo štvrtom riadku pridávame autorizačnú hlavičku, podĺa spôsobu, aký sme popísali vyššie.
+
+V piatom až desiatom riadku deklarujeme správanie pri úspešnom získaní odpovede
+od servra, v tomto prípade zobrazujeme názov a zadanie úlohy v na to určených
+HTML elementoch stránky.
+
+V jedenástom až päťnástom riadku deklarujeme správanie sa pri chybe. Zatiaľ jediná
+chyba, na ktorú reagujeme je 401-UNAUTHORIZED ktorú dostaneme ak posielame
+správu s nesprávnym alebo úplne chýbajúcim tokenom. V tom prípade používateľa presmerujeme
+na prihlasovaciu stránku. Toto správanie je použíté v každej požiadavke, ktorá
+vyžaduje autentifikáciu.
+
+Odosielanie na server je o trochu iné, pretože používa metódu POST a musíme pridať
+aj posielané dáta. To najčastejšie robíme pomocou pridania \newline
+\lstinline[language=Javascript]{data : $("#form").serialize()}, čo nám dáta
+získa priamo z hodnôt vo formulári.
+
+jQuery má ale obmedzenie, že kvôli bezpečnosti nedokáže zapisovať do súborov na disku.
+To znamená, že sťahovanie súborov je náročné na implementáciu. Preto na sťahovanie
+vstupných súborov (pre implementáciu jednoduchého testovača \ref{testovac1}) používame
+formulár, ktorý pošle GET požiadavku na požadovanú adresu. Tento formulár ale nemôže mať
+hlavičku s tokenom, preto sťahovanie vstupov nebude autentifikovať používateľa.
+
+To síce znamená, že používateľ môže mať prístup aj k vstupom úloh, ktoré si ešte neodomkol.
+Tento problém nepovažujeme za závažný, pretože bez zadania úlohy je malá šanca že používateľ
+túto úlohu vyrieši. Ďalej, vo finálnom produkte testovač nebude vyžadovať sťahovanie
+dát, čím bude tento problém úplne odstránený.
+
+Rovnako, jQuery má ťažkosti s posielaním súborov (skoršie verzie dokonca neodkážu
+posielať súbory). Preto na posielanie riešení používame formát XMLHttpRequest, ktorý
+funguje podobne ako AJAX, preto si ho ďalej približovať nebudeme.
