@@ -2,8 +2,11 @@
 
 \label{kap:server}
 
-V tejto kapitole sa oboznámime s návrhom a špecifikáciami vnútorného fungovania servera,
+V tejto kapitole sa oboznámime s návrhom a špecifikáciami návrhu vnútorného fungovania servera,
 bezpečnostných protokoloch a možnosťami poskytovanými administrátorovi.
+
+Je možné, že niektoré z týchto špecifikácií nebudú implementované v prvej pracovnej verzii,
+ale budú prítomné vo finálnom produkte.
 
 \section{Použité technológie}
 
@@ -21,7 +24,6 @@ autorizácie (\ref{oAuth})
 Takisto obsahuje implementáciu pre\_save a post\_save signálov ktoré používame pri
 modeloch ktorých pridanie alebo zmeny priamo menia obsah iných modelov
 (napríklad pri automaticko zarovnávaní úloh (\ref{doc:lesson})).
-\newpage
 \section{Testovač}
 \label{testovace}
 Testovač je najdôležitejšia časť portálu, pretože dokáže zmerať schopnosti použivateľa. Sú tri možné spôsoby testovania:

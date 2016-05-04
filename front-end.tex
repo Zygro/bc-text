@@ -104,10 +104,11 @@ sa zobrazí hneď, ak funkcia samú seba ďalej nevolá, alebo až keď všetci 
 majú zobrazenú hodnotu (aby používateľ lepšie videl, ako postupoval výpočet a v ktorom momente
 boli spočítané ktoré návratové hodnoty).
 
-Vizualizácia vie ale pracovať aj s memoizáciou, čiže pamätaním si návratových hodnôt pre
+Vizualizácia bude vedieť pracovať aj s memoizáciou, čiže pamätaním si návratových hodnôt pre
 argumenty a odpovedanie z pamäte pri každom ďalšom zavolaní funkcie s rovnakými argumentmi.
-Pri výpočte s memoizáciou budeme zobrazovať aj pamäť a v prípade zavolania funckie s argumentmi,
-pre ktoré hodnotu už poznáme, ukážeme aj na vrchol, kde bola hodnota prvý krát vypočítaná.
+Pri výpočte s memoizáciou budeme zobrazovať aj zoznam argumentov a ich hodnôt, ktoré už boli vypočítané
+V prípade vykreslenia vrcholu s argumentmi, pre ktoré hodnotu už poznáme, ukážeme aj na vrchol
+kde bola hodnota prvý krát vypočítaná.
 
 Aj pre túto stránku si uvedieme možnosti, ktoré ponúka používateľovi:
 \begin{itemize}
@@ -118,3 +119,23 @@ Aj pre túto stránku si uvedieme možnosti, ktoré ponúka používateľovi:
    automaticky zastavíme)
   \item vykresliť celý strom výpočtu alebo začať vizualizáciu odznova
 \end{itemize}
+
+Uprednostníme počítanie a vytvorenie stromu pred vykreslením oproti počítaniu počas vykresľovania
+kvôli jednoduchšej implementácii počítania, ale aj vykresľovania samotného.
+
+Je možné implementovať aj spoluprácu s úlohami, kde by sa úloha mohla odkazovať
+na konkrétny vstup vizualizácie, napríklad formou linku ktorý používateľa presmeruje
+na stránku vizualizácie kde bude zadaný potrebný kód.
+
+V momentálnom návrhu ale pre túto funkciu nie je potreba, pretože rovnaký efekt docielime
+jednoducho napísaním potrebného kódu, ktorý používateľovi odporučíme skopírovať
+a vyhodnotiť vo vizualizácii manuálne. Oba spôsoby docielia rovnaký výsledok a
+automatické presmerovanie ušetrí iba málo používateľovho času takže ho považujeme
+za nepotrebné.
+
+Ďalšia možnosť pre budúci vývoj je ukázať iba strom výpočtu bez kódu, čo sa dá
+využiť ako rada k úlohe alebo úplne nový typ úlohy, kde by používateľ musel
+nájsť funkciu, ktorá tento strom generuje.
+
+Vizualizácia výpočtu nám zjavne ponúka veľké množstvo možností, ktoré určite v budúcnosti využijeme
+pre zlepšenie výučbového procesu.
