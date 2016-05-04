@@ -100,7 +100,10 @@ Pomocou tejto schémy sa bude dať prihlásiť cez Facebook, Google+ a GitHub.
 \subsection{Protokoly}
 Aby sme chránili použivateľové dáta a token, všetky požiadavky obsahujúce osobné dáta používajú šifrovaný protokol HTTPS. Keďže HTTPS je pomalší na spracovanie,
 používame ho iba na potrebné požiadavky. Preto verejne známe informácie, ako napríklad zadania úloh alebo ich zoznam, nemusia byť chránené a používajú rýchlejší HTTP.
-\section{Administrácia}
+\section{Administrácia a zbieranie dát}
+Administrátorovi poskytneme prostredie, v ktorom bude môcť prezerať, pridávať,
+upravovať ale aj mazať všetky modely ku ktorým má prístup. Oprávnenie
+používať toto prostredie bude mať samozrejme iba administrátor.
 \subsection{Pridávanie a hodnotenie úloh}
 Pridávanie a spravovanie úloh je hlavnou povinnosťou administrátora. Administrátor okrem zadávania úloh musí poskytnúť aj vzorové riešenie, prípadne nejaké rady k riešeniu úlohy a zaradiť ju podľa obtiažnosti.
 
@@ -110,20 +113,34 @@ Je najlepšie, aby každá úloha mala čo najvyššie hodnotenie zaujímavosti,
 S hodnotením zložitosti je to ale inak: žiadna úloha by nemala byť príliš ľahká (aby bola pre používateľa výzvou) ani
 príliš ťažká (aby ju používateľ zvládol), preto ideálny priemer hodnotenia zložitosti je 3.
 
-Server bude poskytovať administrátorivi možnosť posúvať úlohy vyššie a nižšie v poradí, v ktorom ich používatelia riešia. Takisto bude označovať úlohy, ktoré majú príliš vysokú alebo príliš nízku obtiažnosť vzhľadom na úroveň riešiteľa a navrhovať nové miesto v poradí, kam ich zaradiť. Podobne bude označovať úlohy, ktoré sú považované za najmenej zaujímavé a bude na administrátorovi aby posúdil, či daná nezaujímavá úloha je dôležitá pre proces výučby alebo či ju možno zmeniť alebo odstrániť.
+Server bude poskytovať administrátorovi možnosť posúvať úlohy vyššie a nižšie v poradí, v ktorom ich používatelia riešia. Takisto bude označovať úlohy, ktoré majú príliš vysokú alebo príliš nízku obtiažnosť vzhľadom na úroveň riešiteľa a navrhovať nové miesto v poradí, kam ich zaradiť. Podobne bude označovať úlohy, ktoré sú považované za najmenej zaujímavé a bude na administrátorovi aby posúdil, či daná nezaujímavá úloha je dôležitá pre proces výučby, alebo či ju možno zmeniť alebo odstrániť.
 \subsection{Zbieranie dát o použivateľoch}
 \label{zbieraniedata}
-Náš portál okrem vyučovania dynamického programovania je schopný aj zbierať údaje o schopnostiach použivateľov a ich zlepšovaní sa postupom cez naše vyučovanie. Server bude zbierať viacero možných dát o použivateľskej aktivite:
+Náš portál bude okrem vyučovania dynamického programovania schopný aj zbierať údaje o schopnostiach použivateľov a ich zlepšovaní sa postupom cez naše vyučovanie. Server bude zbierať viacero možných údajov o použivateľskej aktivite:
 \begin{itemize}
 \item Počet navštívených návodových a teoretických stránok na našom portáli
 \item Frekvencia návštev počas riešenia úloh (ako často použivateľ používa naše návody na pomoc s riešením)
 \item Priemernú frekvenciu a dĺžku návštev nášho portálu
 \item Čas od prečítania úlohy po jej správne vyriešenie (nie veľmi dôležitý, pretože neberie do úvahy prestávky pri riešení)
 \item Počet neúspešných pokusov o riešenie
-\item Rozdiel priemerného a použivateľovho hodnotenia úlohy (až keď bude dostatočne veľa hodnotení aby tento údaj niečo znamenal)
+\item Rozdiel priemerného a používateľovho hodnotenia úlohy (až keď bude dostatočne veľa hodnotení aby tento údaj niečo znamenal)
 \end{itemize}
 
-Z týchto údajov budeme vedieť zistiť ako efektívne je vyučovanie (napríklad, žiak sa pravdepodobne zlepšil ak prvé úlohy označoval ťažšie ako priemer a neskoršie ľahšie) a prípadne implementovať automatické zadávanie úloh podľa používateľovych schopností.
+Z týchto údajov budeme vedieť zistiť, ako efektívne je vyučovanie (napríklad, žiak sa pravdepodobne zlepšil ak prvé úlohy označoval ťažšie ako priemer a neskoršie ľahšie) a prípadne implementovať automatické zadávanie úloh podľa používateľovych schopností.
+
+\subsection{Zbieranie dát o úlohách}
+Pre kvalitnejší výučbový proces je nutné vedieť, ktoré úlohy sú populárne a koľko
+sa na nich žiaci naučia. Preto budeme zapisovať dáta z používateľskej aktivity aj pre
+úlohy. Medzi tieto dáta bude patriť:
+\begin{itemize}
+\item Priemerné hodnotenie zložitosti a zaujímavosti úlohy
+\item Priemerný čas od zadania do vyriešenia úlohy
+\item Priemerný počet nesprávnych riešení pred správnym
+\item Priemerný počet použitých rád
+\end{itemize}
+
+Tieto dáta bude môcť vidieť iba administrátor a na ich základe by mal meniť úlohy
+tak, aby používatelia boli s nimi čo najspokojnejší.
 
 \subsection{Oprávnenia použivateľa a administrátora}
 Bežní používatelia majú prístup iba k učebným materiálom, odomknutým úlohám (vyriešeným aj nevyriešeným) a svojim riešeniam. Ďalšie úlohy sa používateľovi odomknú, iba ak správne vyrieši všetky prerekvizitové úlohy. Všetky dáta zozbierané servrom (\ref{zbieraniedata}) budú od používateľa skryté, pretože by mohli spôsobiť frustráciu u pomalšie sa učiacich použivateľov.

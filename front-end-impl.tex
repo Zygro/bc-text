@@ -1,0 +1,78 @@
+\chapter{Dokumentácia stránok}
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{purple}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{darkgray}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+\lstset{
+   language=JavaScript,
+   backgroundcolor=\color{lightgray},
+   extendedchars=true,
+   basicstyle=\small\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\footnotesize,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
+   showtabs=false,
+   captionpos=b
+}
+
+\label{kap:frontImpl}
+V tejto kapitole si priblížime implementáciu prednej časti portálu, s ktorou
+budú používatelia interagovať. Povieme si komunikácii so servrom ale aj o
+implementácii vizualizácie rekurzívnych výpočtov.
+\section{Stránky a ich adresy}
+V prvej pracovnej verzii sú implementované tieto stránky (uvedené s URL adresami)
+\begin{itemize}
+  \item registrácia - \textit{/user/register/}
+  \item prihlasovanie - \textit{/user/login/}
+  \item zoznam úloh - \textit{/lessons/}
+  \item detail úlohy - \textit{/lesson/id/} (id je unikátne identifikačné číslo úlohy)
+  \item vizualizácia - \textit{/visualisation/}
+  \item administrátorské prostredie - \textit{/admin/}
+\end{itemize}
+
+Administrátorské prostredie je predvolené prostredie Django frameworku bez modifikácií a je
+samozrejme prístupné iba prihláseným administrátorom.
+\subsection{Komunikácia so servrom}
+Na komunikáciu so servrom používame hlavne knižnicu jQuery, kvôli jej jednoduchému
+používaniu a podpore pridania autorizačnej hlavičky. Typická požiadavka vyzerá takto:
+
+\begin{lstlisting}[ language = Javascript, title = Požiadavka na získanie zadania jednej úlohy]
+$.ajax({
+   url: "../../api/lesson/"+id+"/",
+   type: "GET",
+   headers: {'Authorization':'Token '+localStorage.getItem('token')},
+   success: function(data) {
+     title = document.getElementById("title")
+     title.innerHTML = "Lesson "+data['name']
+     problem = document.getElementById("problem")
+     problem.innerHTML = "Lesson "+data['problem']
+   },
+   error: function(data) {
+     if (data.status==401) {
+       window.location.replace("../../user/login/")
+     }
+   }
+});
+\end{lstlisting}
+(v tomto príklade je požiadavka trochu zmenená oproti implementácii, aby bola v texte
+prehľadnejšia)
+
+
+Teraz si vysvetlíme niektoré časti tohto kódu:
+
+V druhom riadku používame premennú id, ktorá

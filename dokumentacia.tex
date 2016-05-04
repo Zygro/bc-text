@@ -1,5 +1,35 @@
 \chapter{Dokumentácia servra}
 \label{kap:doc}
+
+\lstdefinelanguage{Python}{
+  keywords={self,while,if,len,filter,id,all,for,else,in,not},
+  keywordstyle=\color{deepblue}\bfseries,
+  ndkeywords={def,return},
+  ndkeywordstyle=\color{purple}\bfseries,
+  stringstyle=\color{deepgreen}\ttfamily,
+  morestring=[b]",
+  morestring=[b]',
+}
+\lstset{
+  language = Python,
+  frame=single,
+  otherkeywords={},             % Add keywords here
+  keywordstyle=\color{deepblue},
+  basicstyle=\small\ttfamily,
+  numberstyle=\small,
+  emph={MyClass,__init__},          % Custom highlighting
+  emphstyle=\color{deepred},    % Custom highlighting style
+  frame=tb,                         % Any extra options here
+  showstringspaces=false,            %
+  numbersep=9pt,
+  tabsize=2,
+  backgroundcolor=\color{lightgray},
+  numbers=left,
+  breaklines=true,
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
+}
+
+
 V tejto kapitole sa pozrieme na prvú pracovnú implementáciu návrhu servra. Oboznámime sa
 s modelmi, pohľadmi a niektorými funkciami, ich možnosťami a použitím.
 \section{Modely}
@@ -68,12 +98,12 @@ Polia:
 \item \textbf{user}: používateľ ktorý riešenie poslal
 \item \textbf{lesson}: úloha ktorú používateľ rieši týmto riešením
 \item \textbf{submittedFile}: súbor s riešením, ktoré bude odovzdané testovaču
-\item \textbf{result}: výsledok - pravda ak bolo riešenie správne, nepravda ak nebolo
+\item \textbf{result}: výsledok - reťazec znakov obsahujúci výpis z testovača
 \end{itemize}
 
 Hneď ako server dostane nové riešenie, spustí testovač a jeho odpoveď uloží v poli
-\textbf{result}. Ak nie je správne, riešenie uložíme a pokračujeme v činnosti ako pred jeho poslaním.
-Ak testovač ale vyhodnotí riešenie ako správne, pred jeho uložením zvýši používateľovu
+\textbf{result}. Ak nie je správne, riešenie uložíme a ďalej s ním nič nerobíme.
+Ak testovač ale vyhodnotí riešenie ako správne (výpis \lstinline[language=Python]{"OK"}), pred jeho uložením zvýši používateľovu
 úroveň o 1 (ak je úloha povinná) a označí úlohu ako vyriešenú v modeli \textbf{UserLessonWrapper} (\ref{modelWrapper}).
 
 \subsection{Comment - komentár}
@@ -149,8 +179,10 @@ Polia:
 \label{modelUserStat}
 V momentálnej implementácii zbierame iba jeden údaj pre používateľov, ktorý ale používame
 na zisťovanie, ktoré úlohy používateľovi sprístupniť. Narozdiel od modelu \textbf{LessonStat} (\ref{modelLessonStat}),
-táto štatistika je prístupná používateľovi a aj ostatným používateľom, ak je ochotný zverejniť svoje
-meno v rebríčku (\ref{score})
+táto štatistika je prístupná používateľovi, pretože ide o jeho výsledky.
+
+Tento model bude vo finálnej obsahovať napríklad aj skóre používateľa, ktoré
+bude podľa priania používateľa zverejnené v rebríčku (\ref{score})
 
 Polia:
 \begin{itemize}
@@ -161,9 +193,8 @@ Polia:
 \subsection{UserLessonWrapper - obal používateľ-úloha}
 \label{modelWrapper}
 Model na určovanie postupu používateľa jednou úlohou. Používa sa iba na vnútorné
-overovanie prístupu používateľa k niektorým modelom. Tento model je unikátny pre ka
-
-
+overovanie prístupu používateľa k niektorým modelom. Tento model je unikátny pre každú
+dvojicu používateľ-úloha
 
 Polia:
 \begin{itemize}
@@ -194,19 +225,8 @@ používateľovom a správnom riešení, vyhodnotí riešenie za nesprávne.
 
 Ak všetky súbory z používateľovho riešenia prejdú týmito testami, vieme povedať,
 že všetky súbory sa zhodovali s tými v správnom riešení a teda riešenie je správne.
-\lstset{
-frame=single,
-otherkeywords={self},             % Add keywords here
-keywordstyle=\color{deepblue},
-emph={MyClass,__init__},          % Custom highlighting
-emphstyle=\color{deepred},    % Custom highlighting style
-stringstyle=\color{deepgreen},
-frame=tb,                         % Any extra options here
-showstringspaces=false,            %
-breaklines=true,
-postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
-}
-\begin{lstlisting}[language=Python]
+
+\begin{lstlisting}[title = testovač]
   def compare_files(correctFile, submitFile):
       correct = zipfile.ZipFile(correctFile)
       submit = zipfile.ZipFile(submitFile)
@@ -243,7 +263,7 @@ Prejdeme tieto kroky:
     s číslom väčším ako počet povinných úloh a teda by bola nedosiahnuteľná.
 \end{itemize}
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, title = Posúvanie úloh]
 def PushOtherLessons (sender, instance, *args, **kwargs):
   if not(instance.optional):
     rank = instance.number
