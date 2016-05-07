@@ -1,4 +1,4 @@
-\chapter{Dokumentácia stránok}
+\chapter{Dokumentácia používateľského prostredia}
 \lstdefinelanguage{JavaScript}{
   keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
   keywordstyle=\color{blue}\bfseries,
@@ -123,3 +123,136 @@ dát, čím bude tento problém úplne odstránený.
 Rovnako, jQuery má ťažkosti s posielaním súborov (skoršie verzie dokonca neodkážu
 posielať súbory). Preto na posielanie riešení používame formát XMLHttpRequest, ktorý
 funguje podobne ako AJAX, preto si ho ďalej približovať nebudeme.
+
+\section{Vizualizácia}
+Vizualizácia rekurzívnych výpočtov (ďalej len vizualizácia) má za úlohu z používateĺovej
+funkcie vytvoriť strom jej výpočtu a ten prehľadne vykresliť. Naša implementácia
+najskôr vygeneruje celý strom a až potom ho používateľovi zobrazí.
+
+Na vyhodnotenie funkcie používame Javascript a na vykresľovanie používame HTML5 objekt canvas,
+teda všetok kód vizualizácie je v HTML dokumente, čo znamená že vizualizácia nijak nekomunikuje so servrom.
+
+Popis implementácie vizualizácie si rozdelíme na štyri časti. Najskôr si spomenieme
+formát a obmedzenia zadávateľných funkcií. Ako druhé si opíšeme kroky
+pred generovaním stromu, potom generovanie vrcholov stromu a nakoniec vykresľovanie.
+
+\subsection{Formát}
+Vizualizácia akceptuje iba funkcie písané v jazyku Javascript. Kvôli jednoduchšej implementácii
+sa vyhodnocovaná funkcia vždy volá \lstinline[language=Javascript]{f}. Používateľov
+vstup budeme načítavať z dvoch textových vstupov: v jednom napíše názvy parametrov
+a ich počiatočné hodnoty a v druhom samotné telo funkcie.
+\subsection{Príprava}
+Po stlačení tlačidla Evaluate si uložíme kód do textovej premennej. Parametre si uložím
+ako reťazec v ktorom sú jednotlivé parametre oddelované čiarkami a argumenty si
+uložím do jednorozmerného poľa. Potom pomocou Javascriptovej funkcie \lstinline[language=Javascript]{eval}
+si vstupný kód a parametre prevediem na funkciu ktorú si uložím pod menom \lstinline[language=Javascript]{originalFunction}.
+
+Pokračujem tým, že si ako \lstinline[language=Javascript]{f} uložím modifikovanú zapisovaciu funkciu
+ktorú si predstavíme v ďalšej sekcii. Tento krok je veľmi dôležitý, pretože odteraz, vždy keď zavoláme funkciu
+f v používateľovom kóde, v skutočnosti nespustíme funkciu ktorú zadal, ale jej modifikovanú,
+zapisovaciu verziu. Máme jednu zapisovaciu funkciu pre obyčajný rekurzívny výpočet
+a druhú pre memoizačný.
+
+Ako posledný krok prípravy túto modifikovanú funkciu spustím
+na parametroch ktoré používateľ zadal.
+
+\subsection{Tvorba stromu výpočtu}
+Vrcholy stromu si ukladáme do poľa a získavame ich iba pomocou indexovania tohto
+poľa, aby sme zaručili že každý vrchol máme uložený v pamäti iba v jednej kópii.
+
+Počas výpočtu si vrcholy vkladáme do zásobníka, aby sme vedeli určiť, ktorý vrchol
+je rodičom ktorého. O detailoch ukladania a vyberania si povieme neskôr.
+
+Pri memoizácii si pamätáme ešte aj prvé výskyty argumentov, čiže zoznam vrcholov
+v ktorých ukladáme do pamäte nový údaj. Tento zoznam potrebujeme, aby sme vedeli
+ukázať, kedy sme vypočítali hodnotu v pamäti.
+
+Pre každý vrchol stromu výpočtu si pamätáme nasledovné údaje:
+
+\begin{itemize}
+  \item poradie v zozname vrcholov
+  \item poradie rodiča v zozname vrcholov
+  \item pole argumentov
+  \item návratovú hodnotu
+  \item či sme získali hodnotu vrchola z pamäti (iba pri memoizácii)
+  \item zoznam detí (tiež ich poradí v zozname)
+  \item hĺbku v strome - používané na zistenie y-ovej súradnice
+  \item počet listov, ktoré sú potomkom tohto vrchola (1 ak tento vrchol je list) - používané na zistenie
+    x-ovej súradnice
+  \item súradnice stredu pri vykresľovaní
+  \item či ukazujeme výsledok (potrebu tohto údaja si vysvetlíme v časti Vykresľovanie)
+\end{itemize}
+
+Ako prvé si v modifikovanej funkcii určíme poradie vrchola a jeho otca. Číslo
+je veľkosť zoznamu vrcholov a rodič je vrchol na konci zásobníka. Zároveň pridáme
+nový vrchol do zoznamu rodičovich detí. Hĺbkou vrchola je dĺžka zásobníka.
+
+Ak máme zapnutú memoizáciu, na tomto mieste overíme, či nemáme pre argumenty nového
+vrchola hodnotu v pamäti. Ak áno, označíme vrchol ako získaný z pamäte, priradíme mu
+návratovú hodnotu a vrátime ju. Ak nemáme hodnotu v pamäti, pokračujeme ďalej ako
+bez memoizácie. Vrchol pridáme do zoznamu všetkých vrcholov.
+
+Aby sme zistili návratovú hodnotu, pridáme vrchol do zásobníka a ako návratovú
+hodnotu priradíme hodnotu z originálnej funkcie. Originálna funkcia pri výpočte
+buď vráti rovno hodnotu, alebo ďalej volá funkciu f, ktorá je teraz naša zapisovacia
+funkcia. Preto, keď nám originálna funkcia vráti svoju hodnotu, terajší vrchol bude mať
+zapísaných všetkých potomkov. V prípade memoizácie uložíme dvojicu argumenty-výsledok do
+pamäte a pridáme tento vrchol do zoznamu prvých výskytov argumentov.
+
+Nakoniec ako počet listov pod terajším vrcholom uložíme sumu počtov listov pod deťmi,
+odstránime terajší vrchol zo zásobníka a vrátime hodnotu.
+
+\subsection{Vykresľovanie}
+V tejto časti si najskôr opíšeme vykresľovanie rekurzie bez memoizácie. Potom
+si spomenieme, aké zmeny musíme implementovať ak chceme vykresliť aj výpočet s
+memoizáciou.
+
+V každom kroku buď odhalíme nový vrchol, alebo návratovú hodnotu jedného
+z už vykreslených vrcholov. Návratovú hodnotu vykreslíme zároveň s vrcholom iba pri listoch.
+Všetky ostatné vrcholy vykresľujeme bez návratovej hodnoty. Tú odhalíme, iba keď
+je odhalená návratová hodnota všetkých jeho detí. Tento prístup simuluje výpočet v ktorom
+poznáme návratovú hodnotu až vtedy, keď vyriešime všetky volania funkcie \lstinline[language=Javascript]{f}.
+Používateľ bude vďaka tomto prístupu mať lepší prehľad o tom, ktoré volanie funkcie ešte prebieha
+a ktoré je už ukončené návratom hodnoty.
+
+Pri vykresľovaní si pamätáme tri zoznamy: zásobník krokov, zoznam vykreslených a zásobník
+nevyriešených vrcholov . Vrchol je v zásobníku nevyriešených vrcholov práve vtedy,
+keď je vykreslený ale jeho hodnota ešte nie je odhalená. Na začiatku simulácie je
+koreň stromu vykreslený a označený za nevyriešený.
+
+Implementujeme dve hlavné funkcie, \lstinline[language=Javascript]{nextStep} a
+\lstinline[language=Javascript]{stepBack}:
+\subsubsection{Krok vpred}
+Pri zavolaní \lstinline[language=Javascript]{nextStep} urobíme krok iba vtedy,
+keď existuje aspoň jeden nevyriešený vrchol, pretože v opačnom prípade výpočet už skončil.
+Predpokladajme teda, že existuje aspoň jeden nevyriešený vrchol. Najprv si zoberieme
+posledný vrchol zo zásobníka nevyriešených a overíme, či sa ho podarilo v minulom kroku vyriešiť.
+Ak áno, do zásobníka krokov pridáme jeho číslo, odstránime ho z nevyriešených vrcholov a
+vykreslíme jeho hodnotu.
+
+Ak nie, vykreslíme ďalší vrchol v zozname všetkých vrcholov. Do tohto zoznamu sme
+každý vrchol zapisovali medzi jeho vytvorením a zistením jeho hodnoty, preto
+tento zoznam má vrcholy zoradené v poradí, v ktorom boli zavolané.
+
+Pri vykresľovaní ďalšieho vrcholu pridáme do zásobníka krokov -1 a ak je nevyriešený,
+pridáme ho do zásobníka nevyriešených vrcholov.
+
+Po konci týchto úkonov prekreslíme celý strom.
+\subsubsection{Krok vzad}
+Pri kroku vzad ako prvé vyberieme posledný krok zo zásobníka krokov. Ak bol tento
+krok väčší alebo rovný 0, vieme, že posledný krok bolo odhalenie hodnoty vrchola.
+Preto tento vrchol pridáme do zásobníka nevyriešených a skryjeme jeho výsledok.
+
+Ak však posledný krok v zásobníku bol -1, musíme skryť posledný odhalený vrchol.
+Ten teda odstránime zo zoznamu vykreslených vrcholov a ak je nevyriešený, tak aj
+zo zásobníka nevyriešených.
+\subsection{Vykresľovanie s memoizáciou}
+Aby sa používatelia lepšie orientovali v memoizačnom výpočte, na ľavej strane
+vykresľovacieho plátna budeme ukazovať zapamätané hodnoty.
+
+Pri odhalení nového vrchola zistíme, či jeho hodnota bola získaná z pamäti.
+Ak áno, spojíme ho na jeden krok prerušovanou
+čiarou s vrcholom, v ktorom sme túto hodnotu vypočítali a uložili. Ak nebol získaný
+z pamäti, vykreslíme ho ako pri výpočte s memoizáciou.
+
+Pri odhaľovaní hodnoty doteraz nevyriešeného vrchola jeho hodnotu pridáme do vykreslenej pamäti.
