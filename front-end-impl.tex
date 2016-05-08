@@ -220,6 +220,12 @@ nevyriešených vrcholov . Vrchol je v zásobníku nevyriešených vrcholov prá
 keď je vykreslený ale jeho hodnota ešte nie je odhalená. Na začiatku simulácie je
 koreň stromu vykreslený a označený za nevyriešený.
 
+\begin{figure}[h]
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/bezMemo.png}
+\caption{Výpočet piateho Fibonacciho čísla bez memoizácie}
+\label{obr:memo}
+\end{figure}
+
 Implementujeme dve hlavné funkcie, \lstinline[language=Javascript]{nextStep} a
 \lstinline[language=Javascript]{stepBack}:
 \subsubsection{Krok vpred}
@@ -256,3 +262,8 @@ Ak áno, spojíme ho na jeden krok prerušovanou
 z pamäti, vykreslíme ho ako pri výpočte s memoizáciou.
 
 Pri odhaľovaní hodnoty doteraz nevyriešeného vrchola jeho hodnotu pridáme do vykreslenej pamäti.
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{images/memoizacia.png}
+\caption{Výpočet piateho Fibonacciho čísla s memoizáciou}
+\label{obr:memo}
+\end{figure}
