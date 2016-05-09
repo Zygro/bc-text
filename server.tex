@@ -5,7 +5,7 @@
 V tejto kapitole sa oboznámime s návrhom a špecifikáciami návrhu vnútorného fungovania servera,
 bezpečnostných protokoloch a možnosťami poskytovanými administrátorovi.
 
-Je možné, že niektoré z týchto špecifikácií nebudú implementované v prvej pracovnej verzii,
+Je možné, že niektoré z týchto funkcíí servra nebudú implementované v prvej pracovnej verzii,
 ale budú prítomné vo finálnom produkte.
 
 \section{Použité technológie}
@@ -26,10 +26,10 @@ modeloch ktorých pridanie alebo zmeny priamo menia obsah iných modelov
 (napríklad pri automaticko zarovnávaní úloh (\ref{doc:lesson})).
 \section{Testovač}
 \label{testovace}
-Testovač je najdôležitejšia časť portálu, pretože dokáže zmerať schopnosti použivateľa. Sú tri možné spôsoby testovania:
+Testovač je najdôležitejšia časť portálu, pretože overí správnosť používateľovho riešenia. Sú tri možné spôsoby testovania:
 \subsection{Stiahnutie vstupov a poslanie výstupov}
 \label{testovac1}
-Toto je najjednoduchší spôsob implementácie testovača. Použivateľ si z nášho portálu si stiahne testovacie vstupy na ktorých spustí
+Toto je najjednoduchší spôsob implementácie testovača. Použivateľ si z nášho portálu si stiahne testovacie vstupy, na ktorých spustí
 svoj program, výstup zapíše do súbora a súbor pošle na server, ktorý skontroluje správnosť odpovede.
 
  Veľká výhoda tohto prístupu je jeho jednoduchosť, ale má značnú nevýhodu: nezaručuje že použivateľ napísal optimálny program.
@@ -37,22 +37,22 @@ svoj program, výstup zapíše do súbora a súbor pošle na server, ktorý skon
 
 Tento problém by sa dal obísť používaním úloh, ktoré majú mimoriadne časovo zložité riešenie hrubou silou (napríklad \(O(2^n)\)), ktoré by na väčších vstupoch
 vyžadovali niekoľko dní počítania.
-Toto riešenie je samozrejme nežiadúce keďže veľmi obmedzuje výber úloh. Preto bude používané iba počas procesu vývoja a nie vo finálnom produkte.
+Toto riešenie je samozrejme nežiadúce keďže veľmi obmedzuje výber úloh. Preto bude toto testovanie používané iba počas procesu vývoja a nie vo finálnom produkte.
 
 \subsection{Testovanie skriptom u použivateľa}
 
 \label{testovac2}
-Druhý možný spôsob testovania je rovnaký ako predošlý, až na jednu zmenu: použivateľ si stiahne testovací skript, ktorý spustí použivateľom zadaný program
-na vstupoch, ktoré stiahne z nášho servera. Potom odošle výstupy a tie sú porovnané so správnymi odpoveďami.
+Druhý možný spôsob testovania je podobný predošlému s jednou zmenu: použivateľ si miesto vstupov stiahne testovací skript, ktorý spustí použivateľom zadaný program
+na vstupoch, ktoré skript stiahne z nášho servera. Potom odošle výstupy a tie sú porovnané so správnymi odpoveďami.
 
 Toto riešenie nám umožňuje merať čas potrebný na beh programu, čo je značné vylepšenie oproti predošlému riešeniu, pretože ak použivateľ nijak nezasiahne
-do skriptu, vieme zistiť či sa mu podarilo úlohu riešiť dynamickým algoritmom.
+do skriptu, vieme zistiť či sa mu podarilo úlohu riešiť časovo optimálnym algoritmom.
 
 Použivateľ ale môže skript viacerými spôsobmi napadnúť, napríklad manipulovať s časovým obmedzením alebo získať vstupy, vyriešiť ich iným, pomalším algoritmom a
 vytvoriť program ktorý pre každý vstup vypíše správny výstup zo súboru alebo priamo zapísaný v zdrojovom kóde.
 
 Tieto chyby sa dajú vyriešiť zabezpečením skriptu proti útokom, ale žiadna ochrana nie je stopercentná. Mohli by sme teda napríklad neakceptovať výsledky, ktorých podozrivo vyzerajúce
-časy (t.j. časy, ktoré sa nesprávajú podľa krivky, časy dlhšie ako limit, ktoré ale skript sa nezastavil atď.). Toto riešenie ale nie je akceptovateľné, pretože by mohlo prepustiť
+časy (t.j. časy, ktoré sa nesprávajú podľa krivky, časy dlhšie ako limit, ktoré ale skript sa nezastavil atď.). Toto riešenie ale nie je akceptovateľné, pretože by mohlo stále prepustiť
 falšované výsledky alebo odmietnuť správne riešenie.
 
 Na ochranu vstupov sa dá použiť procedurálna generácia alebo náhodné vyberanie z väčšej množiny vstupov, ale tie pridávajú prácu administrátorovi a komplikujú pridávanie nových úloh.
@@ -60,20 +60,30 @@ Na ochranu vstupov sa dá použiť procedurálna generácia alebo náhodné vybe
 \subsection{Testovanie na servri}
 Tretí spôsob testovania prebieha na našom serveri. Použivateľ pošle zdrojový kód svojho riešenia, ten na serveri skompilujeme a vyhodnotíme s časovým obmedzením behu.
 
-Veľkou výhodou je, že použivateľ nemá prístup k testovaným vstupom a správnym výstupom, takže úloha nebude vyhodnotená za správne vyriešenú pri neoptimálnom programe kvôli vyprchaniu časového limitu (závisí od dĺžky vstupu a časového limitu, ktoré zadáva administrátor). Rovnako je oveľa ťažšie napadnúť a upraviť testovač.
+Veľkou výhodou je, že použivateľ nemá prístup k testovaným vstupom a správnym výstupom,
+takže úloha nebude vyhodnotená za správne vyriešenú pri neoptimálnom programe kvôli vyprchaniu
+časového limitu (závisí od dĺžky vstupu a časového limitu, ktoré zadáva administrátor).
+Rovnako je oveľa ťažšie napadnúť a upraviť testovač.
 
-Nevýhodou testovača je napríklad zložitá implementácia, pretože musí vedieť kompilovať čo najviac programovacích jazykov a zároveň musíme dávať pozor aby poslaný program nijako nenarušoval bezpečnosť servera (nečítal z pamäťe ktorú nealokoval, nespúšťal žiadne iné programy, nepoužíval niektoré systémové volania a podobne). Ďalšou nevýhodou sú nároky na výpočtový čas servera: keďže proces testovania spúšťa program na serveri, môže server spomaliť.
+Nevýhodou testovača je napríklad zložitá implementácia, pretože musí vedieť kompilovať čo
+najviac programovacích jazykov a zároveň musíme dávať pozor aby poslaný program nijako
+nenarušoval bezpečnosť servera (nečítal z pamäťe ktorú nealokoval, nespúšťal žiadne iné programy,
+nepoužíval niektoré systémové volania a podobne). Ďalšou nevýhodou sú nároky na výpočtový čas servera:
+keďže proces testovania spúšťa program na serveri, môže server spomaliť.
 
-Nakoľko pri tomto testovači je najťažšie mať správne výsledky v časovom limite a nemať optimálne riešenie, v portáli je implementovaný tento testovač. Ak ale sa zvýši popularita nášho portálu a vznikne problém s rýchlosťou testovania, bude možno treba zvážiť buď vylepšenie hardvéru servera alebo implementáciu predošlého testovača (\ref{testovac2})
+Nakoľko pri tomto testovači je najťažšie mať správne výsledky v časovom limite a
+nemať optimálne riešenie, vo finálnom produkte bude implementovaný tento testovač. Ak ale sa zvýši
+popularita nášho portálu a vznikne problém s rýchlosťou testovania, bude možno treba zvážiť
+buď vylepšenie hardvéru servera alebo implementáciu predošlého testovača (\ref{testovac2})
 
 \section{Bezpečnosť}
 \subsection{Autorizácia}
 \label{authorization}
-Portál používa token autentifikáciu ktorá z pohľadu používateľa vyzerá nasledovne:
+Portál bude používať token autentifikáciu ktorá z pohľadu používateľa vyzerá nasledovne:
 
 Používateľ pri prihlasovaní pošle prihlasovacie meno a heslo (tento krok je iný pri prihlasovaní cez externú doménu) a ako odpoveď
 dostane náhodne vygenerovaný reťazec o dĺžke približne 40 znakov. Potom všetky požiadavky, pre ktoré server overuje totožnosť používateľa
- musia v hlavičke uviesť tento token, inak budú zamietnuté.
+musia v hlavičke uviesť tento token. Ak tieto požiadavky uvedú neplatný alebo žiadny token, budú zamietnuté.
 Server si pamätá používateľov token až kým sa použivateľ neodhlási alebo mu nevyprší platnosť po dlhšej neaktivite.
 
 Všetky požiadavky musia obsahovať token (buď používateľov alebo CSRF token),
@@ -81,8 +91,10 @@ Všetky požiadavky musia obsahovať token (buď používateľov alebo CSRF toke
 
 \subsection{Prihlasovanie cez externé portály}
 \label{oAuth}
-Portál má viacero možností prihlasovania sa cez externé portály. Použijeme prihlasovaciu schému OAuth 2.0, aby komunikácia s externým
-portálom prebiehala iba pri prihlasovaní po ktorom použivateľov prehliadačl komunikuje so serverom ako keby sa prihlásil priamo na náš portál bez využitia externej služby.
+Portál bude mať viacero možností prihlasovania sa cez externé portály.
+Použijeme prihlasovaciu schému OAuth 2.0, aby komunikácia s externým
+portálom prebiehala iba pri prihlasovaní po ktorom použivateľov prehliadačl
+komunikuje so serverom ako keby sa prihlásil priamo na náš portál bez využitia externej služby.
 
 Prihlasovanie cez OAuth 2.0 prebieha nasledovne:
 \begin{enumerate}
@@ -95,28 +107,22 @@ Prihlasovanie cez OAuth 2.0 prebieha nasledovne:
 
 Pomocou tejto schémy sa bude dať prihlásiť cez Facebook, Google+ a GitHub.
 \newline
-(Tajné ID použité v kroku \ref{secret} je prístupné iba administrátorom)
+Tajné ID použité v kroku \ref{secret} je prístupné iba administrátorom.
 
-\subsection{Protokoly}
-Aby sme chránili použivateľové dáta a token, všetky požiadavky obsahujúce osobné dáta používajú šifrovaný protokol HTTPS. Keďže HTTPS je pomalší na spracovanie,
-používame ho iba na potrebné požiadavky. Preto verejne známe informácie, ako napríklad zadania úloh alebo ich zoznam, nemusia byť chránené a používajú rýchlejší HTTP.
 \section{Administrácia a zbieranie dát}
 Administrátorovi poskytneme prostredie, v ktorom bude môcť prezerať, pridávať,
 upravovať ale aj mazať všetky modely ku ktorým má prístup. Oprávnenie
 používať toto prostredie bude mať samozrejme iba administrátor.
 \subsection{Pridávanie a hodnotenie úloh}
-Pridávanie a spravovanie úloh je hlavnou povinnosťou administrátora. Administrátor okrem zadávania úloh musí poskytnúť aj vzorové riešenie, prípadne nejaké rady k riešeniu úlohy a zaradiť ju podľa obtiažnosti.
+Pridávanie a spravovanie úloh je hlavnou povinnosťou administrátora. Administrátor
+okrem zadávania úloh musí poskytnúť aj vzorové riešenie, prípadne nejaké rady k
+riešeniu úlohy a zaradiť ju podľa obtiažnosti.
 
-Administrátor by sa mal snažiť, aby každá úloha mala ideálne používateľské hodnotenie (\ref{rating})
-Je najlepšie, aby každá úloha mala čo najvyššie hodnotenie zaujímavosti, nakoľko zaujímavé úlohy lepšie motivujú používateľov.
-
-S hodnotením zložitosti je to ale inak: žiadna úloha by nemala byť príliš ľahká (aby bola pre používateľa výzvou) ani
-príliš ťažká (aby ju používateľ zvládol), preto ideálny priemer hodnotenia zložitosti je 3.
-
-Server bude poskytovať administrátorovi možnosť posúvať úlohy vyššie a nižšie v poradí, v ktorom ich používatelia riešia. Takisto bude označovať úlohy, ktoré majú príliš vysokú alebo príliš nízku obtiažnosť vzhľadom na úroveň riešiteľa a navrhovať nové miesto v poradí, kam ich zaradiť. Podobne bude označovať úlohy, ktoré sú považované za najmenej zaujímavé a bude na administrátorovi aby posúdil, či daná nezaujímavá úloha je dôležitá pre proces výučby, alebo či ju možno zmeniť alebo odstrániť.
 \subsection{Zbieranie dát o použivateľoch}
 \label{zbieraniedata}
-Náš portál bude okrem vyučovania dynamického programovania schopný aj zbierať údaje o schopnostiach použivateľov a ich zlepšovaní sa postupom cez naše vyučovanie. Server bude zbierať viacero možných údajov o použivateľskej aktivite:
+Náš portál bude okrem vyučovania dynamického programovania schopný aj zbierať údaje o
+schopnostiach použivateľov a ich zlepšovaní sa postupom cez naše vyučovanie.
+Server bude zbierať viacero možných údajov o použivateľskej aktivite:
 \begin{itemize}
 \item Počet navštívených návodových a teoretických stránok na našom portáli
 \item Frekvencia návštev počas riešenia úloh (ako často použivateľ používa naše návody na pomoc s riešením)
@@ -126,7 +132,10 @@ Náš portál bude okrem vyučovania dynamického programovania schopný aj zbie
 \item Rozdiel priemerného a používateľovho hodnotenia úlohy (až keď bude dostatočne veľa hodnotení aby tento údaj niečo znamenal)
 \end{itemize}
 
-Z týchto údajov budeme vedieť zistiť, ako efektívne je vyučovanie (napríklad, žiak sa pravdepodobne zlepšil ak prvé úlohy označoval ťažšie ako priemer a neskoršie ľahšie) a prípadne implementovať automatické zadávanie úloh podľa používateľovych schopností.
+Z týchto údajov budeme vedieť zistiť, ako efektívne je vyučovanie
+(napríklad, žiak sa pravdepodobne zlepšil ak prvé úlohy označoval ťažšie ako priemer a neskoršie ľahšie),
+použiť spätnú väzbu na zlepšenie kvality výučby
+a prípadne neskôr implementovať automatické odporúčanie úloh podľa používateľovych schopností.
 
 \subsection{Zbieranie dát o úlohách}
 Pre kvalitnejší výučbový proces je nutné vedieť, ktoré úlohy sú populárne a koľko
@@ -142,9 +151,30 @@ sa na nich žiaci naučia. Preto budeme zapisovať dáta z používateľskej akt
 Tieto dáta bude môcť vidieť iba administrátor a na ich základe by mal meniť úlohy
 tak, aby používatelia boli s nimi čo najspokojnejší.
 
+Administrátor by sa preto mal snažiť, aby každá úloha mala ideálne používateľské hodnotenie (\ref{rating})
+Je najlepšie, aby každá úloha mala čo najvyššie hodnotenie zaujímavosti,
+nakoľko zaujímavé úlohy lepšie motivujú používateľov.
+
+S hodnotením zložitosti je to ale inak: žiadna úloha by nemala byť príliš ľahká (aby bola pre používateľa výzvou) ani
+príliš ťažká (aby ju používateľ zvládol), preto ideálny priemer hodnotenia zložitosti je 3.
+
+Server bude poskytovať administrátorovi možnosť posúvať úlohy vyššie a nižšie v poradí,
+v ktorom ich používatelia riešia. Takisto bude označovať úlohy, ktoré majú príliš vysokú alebo
+príliš nízku obtiažnosť vzhľadom na úroveň riešiteľa a navrhovať nové miesto v poradí, kam ich zaradiť.
+
+Podobne bude označovať úlohy, ktoré sú považované za najmenej zaujímavé a bude na administrátorovi
+aby posúdil, či daná nezaujímavá úloha je dôležitá pre proces výučby, alebo či ju možno zmeniť alebo odstrániť.
+
 \subsection{Oprávnenia použivateľa a administrátora}
-Bežní používatelia majú prístup iba k učebným materiálom, odomknutým úlohám (vyriešeným aj nevyriešeným) a svojim riešeniam. Ďalšie úlohy sa používateľovi odomknú, iba ak správne vyrieši všetky prerekvizitové úlohy. Všetky dáta zozbierané servrom (\ref{zbieraniedata}) budú od používateľa skryté, pretože by mohli spôsobiť frustráciu u pomalšie sa učiacich použivateľov.
+Bežní používatelia majú prístup iba k učebným materiálom, odomknutým úlohám
+(vyriešeným aj nevyriešeným) a svojim riešeniam. Ďalšie úlohy sa používateľovi odomknú,
+iba ak správne vyrieši všetky prerekvizitové úlohy. Všetky dáta zozbierané servrom (\ref{zbieraniedata})
+budú od používateľa skryté, pretože by mohli spôsobiť frustráciu u pomalšie sa učiacich použivateľov.
 
-Administrátor bude mať prístup ku všetkým úlohám, riešeniam, zozbieraným dátam všetkých použivateľov a ich priemerom. Bude mať aj možnosť manuálne meniť niektoré hodnotenia a odomykať alebo zamykať použivateľom úlohy.
+Administrátor bude mať prístup ku všetkým úlohám, riešeniam, zozbieraným dátam všetkých použivateľov
+a ich priemerom. Bude mať aj možnosť manuálne meniť niektoré hodnotenia a odomykať alebo zamykať použivateľom úlohy.
 
-Túto možnosť obchádzať pravidlá administrátorovi dávame pre prípad, že vznikne chyba a používateľovi sa napríklad odomkne úloha ku ktorej nemal mať prístup alebo neodomkne taká, ktorej všetky prerekvizity splnil. Používateľ v prípade takejto chyby bude môcť kontaktovať administrátora, ktorý preverí či naozaj nastala chyba a bude ju môcť napraviť bez debugovania servera, čo môže trvať príliš dlho.
+Túto možnosť obchádzať pravidlá administrátorovi dávame pre prípad, že vznikne chyba a
+používateľovi sa napríklad odomkne úloha ku ktorej nemal mať prístup alebo neodomkne taká,
+ktorej všetky prerekvizity splnil. Používateľ v prípade takejto chyby bude môcť kontaktovať
+administrátora, ktorý preverí, či naozaj nastala chyba a bude ju môcť napraviť bez debugovania servera.

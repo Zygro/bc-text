@@ -186,17 +186,31 @@ Pre každý vrchol stromu výpočtu si pamätáme nasledovné údaje:
 Ako prvé si v modifikovanej funkcii určíme poradie vrchola a jeho otca. Číslo
 je veľkosť zoznamu vrcholov a rodič je vrchol na konci zásobníka. Zároveň pridáme
 nový vrchol do zoznamu rodičovich detí. Hĺbkou vrchola je dĺžka zásobníka.
+Vrchol pridáme do zoznamu všetkých vrcholov.
 
 Ak máme zapnutú memoizáciu, na tomto mieste overíme, či nemáme pre argumenty nového
-vrchola hodnotu v pamäti. Ak áno, označíme vrchol ako získaný z pamäte, priradíme mu
+vrchola v pamäti už vypočítanú hodnotu. Ak áno, označíme vrchol ako získaný z pamäte, priradíme mu
 návratovú hodnotu a vrátime ju. Ak nemáme hodnotu v pamäti, pokračujeme ďalej ako
-bez memoizácie. Vrchol pridáme do zoznamu všetkých vrcholov.
+bez memoizácie.
 
-Aby sme zistili návratovú hodnotu, pridáme vrchol do zásobníka a ako návratovú
-hodnotu priradíme hodnotu z originálnej funkcie. Originálna funkcia pri výpočte
-buď vráti rovno hodnotu, alebo ďalej volá funkciu f, ktorá je teraz naša zapisovacia
-funkcia. Preto, keď nám originálna funkcia vráti svoju hodnotu, terajší vrchol bude mať
-zapísaných všetkých potomkov. V prípade memoizácie uložíme dvojicu argumenty-výsledok do
+Teraz overíme, či vrcholov nie je viac ako 1000. Ak áno, výpočet zastavíme
+a používateľovi ukážeme chybovú hlášku. Týmto zabránime nekonečnému volaniu a príliš
+veľkým a pamäťovo náročným simuláciam.
+\newline
+\newline
+Aby sme zistili návratovú hodnotu, pridáme vrchol do zásobníka a ako
+hodnotu priradíme návratovú hodnotu z originálnej funkcie na rovnakých argumentoch.
+
+Originálna funkcia pri výpočte
+buď hodnotu vráti hneď, alebo ďalej volá funkciu f. f ale je naša zapisovacia
+funkcia. Preto originálna funkcia pri svojom výpočte zavolá zapisovaciu funkciu
+miesto volania samej seba (s rovnakými argumentami, ako by volala samú seba).
+Naša zapisovacia funkcia pre všetky argumenty vráti tú istú hodnotu ako pôvodná funkcia.
+To znamená, že výpočet originálnej a zapisovacej funkcie sa vetví rovnako.
+Preto všetky volania pôvodnej funkcie budú zapísané našou zapisovacou funkciou ako
+vrcholy stromu.
+
+V prípade memoizácie uložíme dvojicu argumenty-výsledok do
 pamäte a pridáme tento vrchol do zoznamu prvých výskytov argumentov.
 
 Nakoniec ako počet listov pod terajším vrcholom uložíme sumu počtov listov pod deťmi,
