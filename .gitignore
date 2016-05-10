@@ -1,4 +1,5 @@
-*.out
+*.gz
+*.pdf
 *.log
-*.toc
+*.zip
 *.py

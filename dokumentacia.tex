@@ -217,29 +217,32 @@ Testovač je v prvej pracovnej verzii implementovaný podľa najjednoduchšieho 
 
 Uvedieme si popis kódu testovača a potom aj samotný kód.
 
-Tento testovač otvorí používateľove a správne riešenie úlohy ako .zip súbor.
-Najprv overí, či počet súborov je rovnaký. Ak nie, vypíše chybovú hlášku \newline\lstinline[language=Python]{"Wrong file structure"}.
+Najprv overíme, či riešenie je .zip súbor. Ak nie, hneď vypíšeme hlášku \newline\lstinline[language=Python]{"Not a .zip file"}.
+Potom otvoríme používateľove a správne riešenie úlohy v knižnici zipfile.
+Ďalej overíme, či počet súborov je rovnaký. Ak nie, vypíšeme chybovú hlášku \newline\lstinline[language=Python]{"Wrong file structure"}.
 
-Potom pre všetky súbory zo správneho riešenia skúsi nájsť súbor s rovnakým menom
-v používateľovom riešení. Ak ho nenájde, tiež vypíše chybu \lstinline[language=Python]{"Wrong file structure"}.
-Ak ho nájde, ale obsah súboru sa líši v
-používateľovom a správnom riešení, vyhodnotí riešenie za nesprávne (hláška \lstinline[language=Python]{"Wrong answer"}).
+Potom pre všetky súbory zo správneho riešenia skúsime nájsť súbor s rovnakým menom
+v používateľovom riešení. Ak ho nenájdeme, tiež vypíšeme chybu \newline\lstinline[language=Python]{"Wrong file structure"}.
+Ak ho nájdeme, ale obsah súboru sa líši v
+používateľovom a správnom riešení, vyhodnotíme riešenie za nesprávne (hláška \lstinline[language=Python]{"Wrong answer"}).
 
 Ak všetky súbory z používateľovho riešenia prejdú týmito testami, vieme povedať,
 že všetky súbory sa zhodovali s tými v správnom riešení a teda riešenie je správne.
 V tom prípade testovač vráti \lstinline[language=Python]{"OK"}.
 \begin{lstlisting}[title = testovač]
-  def compare_files(correctFile, submitFile):
-      correct = zipfile.ZipFile(correctFile)
-      submit = zipfile.ZipFile(submitFile)
-      if len(correct.namelist()) != len(submit.namelist()):
+def compare_files(correctFile, submitFile):
+  if (not zipfile.is_zipfile(submitFile)):
+      return "Not a .zip file"
+  correct = zipfile.ZipFile(correctFile)
+  submit = zipfile.ZipFile(submitFile)
+  if len(correct.namelist()) != len(submit.namelist()):
+      return "Wrong file structure"
+  for name in correct.namelist():
+      if name not in submit.namelist():
           return "Wrong file structure"
-      for name in correct.namelist():
-          if name not in submit.namelist():
-              return "Wrong file structure"
-          if submit.read(name) != correct.read(name):
-              return "Wrong answer"
-      return "OK"
+      if submit.read(name) != correct.read(name):
+          return "Wrong answer"
+  return "OK"
 \end{lstlisting}
 
 Nevýhodou je, že používateľove súbory musia mať rovnaké meno ako tie v správnom riešení,
@@ -250,9 +253,14 @@ s rovnakým menom, ale príponou .out (napríklad vstupný súbor 01.a.in a kore
 
 \subsection{Posúvanie úloh}
 \label{implementacia:posuvanie}
-Každá úroveň úloh musí mať presne jednu povinnú úlohu. Keďže chceme, aby administrátor
-nemusel úlohy posúvať sám pred pridaním novej alebo pred presunutím existujúcej úlohy na inú úroveň,
-tento proces zarovnávania si automatizujeme. Funkciu automatického zarovnávania
+Je na administrátorovom uvážení, ktorá úloha sa bude nachádzať v ktorej úrovni.
+Preto môže úlohy nie len pridávať, ale aj posúvať. V každej úrovni ale musí
+byť práve jedna povinná úloha. Preto na pridanie novej alebo zmenu úrovne existujúcej
+povinnej úlohy by administrátor musel posúvať ostatné existujúce úlohy,
+čo môže byť časovo náročné a môžu vzniknúť chyby. Preto tento proces automatizujeme,
+aby sme administrátorovi uľahčili prácu.
+
+Funkciu automatického zarovnávania
 spojíme s modelom \textbf{Lesson} pomocou signálu \lstinline[language=Python]{post_save}.
 Tento signál nám zaručí, že pri uložení úlohy sa zavolá zarovnávacia funkcia.
 
@@ -266,34 +274,6 @@ Algoritmus zarovnávania sleduje tieto kroky:
 \item nakoniec pridáme ukladanú úlohu a zarovnáme ju tiež, nakoľko administrátor mohol urobiť chybu a pridať úlohu
     s číslom väčším ako počet povinných úloh a teda by bola nedosiahnuteľná.
 \end{itemize}
-
-\begin{lstlisting}[language=Python, title = Posúvanie úloh]
-def PushOtherLessons (sender, instance, *args, **kwargs):
-  if not(instance.optional):
-    rank = instance.number
-    non_optionals = [x for x in Lesson.objects.all().order_by('number')
-      if not(x.optional) and x.id!=instance.id]
-    #fill the gaps
-    for l in non_optionals:
-      while len(Lesson.objects.filter(number = (l.number-1)))==0 and l.number>1:
-        Lesson.objects.filter(id=l.id).update(number = l.number-1)
-        l.number -= 1
-        print(l)
-    #push later lessons one level up
-    if len(Lesson.objects.filter(number=rank))>0:
-      Lesson.objects.filter(number__gte = rank, optional=False).exclude(id=instance.id).update(number = F('number')+1)
-    non_optionals = [x for x in Lesson.objects.all().order_by('number') if not(x.optional) and x.id!=instance.id]
-    #fill the gaps again
-    for l in non_optionals:
-      while len(Lesson.objects.filter(number = (l.number-1)))==0 and l.number>1:
-        Lesson.objects.filter(id=l.id).update(number = l.number-1)
-        l.number -= 1
-    #adjust saved lesson
-    while len(Lesson.objects.filter(number = (instance.number-1)))==0 and instance.number>1:
-      Lesson.objects.filter(id=instance.id).update(number = instance.number-1)
-      instance.number -= 1
-post_save.connect(PushOtherLessons, sender=Lesson)
-\end{lstlisting}
 
 Vypĺňanie medzier sa uskutočňuje pomocou \lstinline[language=Python]{while} cyklu,
 v ktorom dekrementujeme úroveň zarovnávanej úlohy, až kým nenarazíme na prvú povinnú úlohu ktorá má
@@ -310,3 +290,32 @@ konkrétne \lstinline[language=Python]{F('number')}. Tento výraz F nám dovoľu
 poľa práve obnovovaného objektu bez toho, aby sme mu priradili premennú čím skracujeme
 a sprehľadňujeme kód. V ostatných prípadoch výraz F nie je potrebný, pretože už máme
 obnovovanú úlohu označenú premennou l alebo instance.
+\newpage
+\begin{lstlisting}[language=Python, title = Posúvanie úloh]
+def PushOtherLessons (sender, instance, *args, **kwargs):
+  rank = instance.number
+  non_optionals = [x for x in Lesson.objects.all().order_by('number')if not(x.optional) and x.id!=instance.id]
+  #fill the gaps
+  print(non_optionals)
+  for l in non_optionals:
+    while len(Lesson.objects.filter(number = (l.number-1), optional = False))==0 and l.number>1:
+      Lesson.objects.filter(id=l.id).update(number = l.number-1)
+      l.number -= 1
+      print(l)
+  #push later lessons one level up
+  if not(instance.optional):
+    if len(Lesson.objects.filter(number=rank))>0:
+      Lesson.objects.filter(number__gte = rank, optional=False).exclude(id=instance.id).update(number = F('number')+1)
+  non_optionals = [x for x in Lesson.objects.all().order_by('number') if not(x.optional) and x.id!=instance.id]
+  #fill the gaps again
+  for l in non_optionals:
+    while len(Lesson.objects.filter(number = (l.number-1), optional = False))==0 and l.number>1:
+      Lesson.objects.filter(id=l.id).update(number = l.number-1)
+      l.number -= 1
+  #adjust saved lesson
+  if (not instance.optional):
+    while len(Lesson.objects.filter(number = (instance.number-1)))==0 and instance.number>1:
+      Lesson.objects.filter(id=instance.id).update(number = instance.number-1)
+      instance.number -= 1
+post_save.connect(PushOtherLessons, sender=Lesson)
+\end{lstlisting}
