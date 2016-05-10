@@ -13,75 +13,45 @@ overíme. Ďalšie správanie portálu závisí na správnosti riešenia
 (podľa implementácie testovača (\ref{testovace}) sa pod riešením môže rozumieť
 samotný kód alebo archivované súbory s výstupmi).
 
-Úlohy sú rozdelené na povinné a nepovinné a zoradené do rôznych úrovní.
-Na každej úrovni je jedna povinná a ľubovoľný počet nepovinných úloh.
+Úlohy sú rozdelené na povinné, nepovinné a výučbové texty, ktoré nie sú testované.
+Taktiež sú zoradené do rôznych úrovní.
+Na každej úrovni je jedna povinná a ľubovoľný počet nepovinných úloh a textov.
 Ak používateľ správne vyrieši povinnú úlohu, jeho úroveň sa zvýši o 1 a
-odomknú sa mu nové úlohy. Nepovinné úlohy neodomykajú nové úrovne, ale rátajú
-sa používateľovi do jeho skóre (\ref{score}).
+odomknú sa mu nové úlohy.
 
 \subsection{Rady}
-Ak si používateľ nevie rady s úlohou, bude mať možnosť požiadať o radu. Každá úloha
-bude mať ľubovoľne veľa rád - podľa uváženia administrátora. Používateľ pri začatí riešenia
+Ak si používateľ nevie rady s úlohou, má možnosť požiadať o radu. Každá úloha
+môže mať ľubovoľne veľa rád - podľa uváženia administrátora. Používateľ pri začatí riešenia
 úlohy nebude mať k dispozícii žiadnu radu, ale môže o ňu kedykoľvek požiadať tlačidlom na
 stránke úlohy, ktoré mu sprístupní jednu ďalšiu radu.
 Používateľovi sa vždy pri zobrazení úlohy ukážu aj všetky rady ku ktorým má prístup.
 
-\newpage
-\subsection{Bodovanie a rebríček}
-\label{score}
-Každý používateľ bude mať úroveň a skóre, ktoré ukazujú jeho postup učebným procesom.
-
-Úroveň používateľa je jednoducho najvyššia úroveň úloh ktoré sa podarilo používateľovi odomknúť.
-
-Skóre je o niečo zložitejšie: všetky správne vyriešené úlohy (povinné aj nepovinné)
-pridajú používateľovi do skóre svoju úroveň. Napríklad prvá úloha sa ráta za
-1 bod a úloha na vyššej, povedzme piatej úrovni pridá 5 bodov.
-\newline
-\newline
-Používatelia budú mať aj možnosť pozrieť si svoje poradie v rebríčku a porovnať sa
-s ostatnými používateľmi. Sú dva rôzne rebríčky: rebríček úrovní a rebríček skóre.
-
-Každý používateľ bude môcť vidieť v rebríčkoch seba a všetkých ostatných používateľov ktorí
-budú súhlasiť so zverejnením svojho skóre (používateľ bude môcť tento súhlas vo svojom profile kedykoľvek zmeniť).
-
-K rebríčkom bude mať prístup aj používateľ, ktorý nesúhlasí so zverejnením svojej úrovne a skóre.
-Takýto používateľ stále bude vidieť svoje poradie v porovnaní s ostatnými používateľmi tak isto
-ako ostatní používatelia s tou zmenou, že sa nezobrazí v rebríčkoch ostatným používateľom.
-
 \subsection{Hodnotenie úloh}
 \label{rating}
-Používatelia budú mať môcť po správnom vyriešení úlohu ohodnotiť.
+Používatelia môžu po správnom vyriešení úlohu ohodnotiť.
 
 Budú mať možnosť (ale nie povinnosť) ohodnotiť jej obtiažnosť a
-zaujímavosť na stupnici od 1 do 5. Tieto hodnotenia sa budú priemerovať a ich priemery
-budú prístupné iba administrátorovi. Každé hodnotenie bude prístupné iba používateľovi ktorý
-ho vytvoril a administrátorovi. Každý používateľ bude môcť ohodnotiť úlohu iba raz.
+zaujímavosť na stupnici od 1 do 5. Tieto hodnotenia sa priemerujú a tieto priemery
+budú sprístupné iba administrátorovi. Každé hodnotenie je prístupné iba používateľovi ktorý
+ho vytvoril a administrátorovi. Každý používateľ môže ohodnotiť úlohu iba raz.
 
 \subsection{Diskusia}
 Každá úloha bude mať diskusiu, v ktorej bude možné rozoberať úlohu.
-V momentálnom návrhu je celá diskusia prístupná všetkým používateľom ktorí majú
-prístup k úlohe, z čoho ale môže vzniknúť problém prezrádzania správnych riešenie
-ostatným používateľom, ktorí ešte úlohu nevyriešili
+Pri implementačných úlohách ale môžu vzniknúť rôzne problémy a potreba moderácie diskusie.
+O týchto problémoch si povieme
+viac v kapitole o budúcom vývoji \ref{future:disc}
 
-Ak tento problém vznikne, budeme musieť rozdeliť diskusiu na dve: pre tých používateľov, čo úlohu vyriešili a pre tých čo ešte nie.
-
-Ak budú stále pretrvávať problémy (napríklad používateľ prezradí riešenie skôr ako ho odovzdá na testovanie),
-môžme povoliť diskusiu iba pre úspešných riešiteľov.
-
-Toto riešenie ale môže byť v rozpore s účelom diskusie, nakoľko sa môže stať, že používatelia sa po vyriešení úlohy
-o ňu prestanú zaujímať. Preto riešenie tohto problému zatiaľ necháme na administrátorovi, aby zmazal všetky diskusné
-príspevky s radami, ktoré príliš zjednodušujú úlohu a iným nevhodným obsahom.
 \section{Prostredie}
 Predstavíme jednotlivé stránky ku ktorým bude používateľ mať prístup a aké
 funkcie poskytujú.
 
 \subsection{Základné stránky}
-Portál bude obsahovať stránky na registráciu nových používateľov, prihlásenie, zoznam úloh a
+Portál obsahuje stránky na registráciu nových používateľov, prihlásenie, zoznam úloh a
 používateľov profil. Tieto stránky sú jednoduché a ich funkcia evidentná, preto ich iba spomenieme
 bez podrobného popisu.
 
 \subsection{Detail úlohy}
-Stránka ktorá zobrazí detail jednej úlohu: jej názov, zadanie, rady o ktoré používateľ požiadal, hodnotenie jeho riešení
+Stránka, ktorá zobrazí detail jednej úlohu: jej názov, zadanie, rady o ktoré používateľ požiadal, hodnotenie jeho riešení
 generované testovačom a nasledujúce možnosti:
 \begin{itemize}
   \item stiahnuť vstupné dáta alebo testovací skript - poskytnutie tejto možnosti závisí od implementácie testovača (\ref{testovace})
@@ -93,21 +63,22 @@ generované testovačom a nasledujúce možnosti:
 
 \subsection{Vizualizácia rekurzívnych výpočtov}
 Jedna z najťažších častí učenia sa dynamického programovania je pochopenie rekurzívnych funkcií.
-Preto náš portál bude poskytovať možnosť si v prehľadnej forme zobraziť výpočet
+Preto náš portál poskytuje možnosť si v prehľadnej forme zobraziť výpočet
 rekurzívnej funkcie zadanej používateľom.
 
-Na stránke vizualizácie si používateľ bude môcť napísať svoju funkciu, ktorej stránka vytvorí
-a zobrazí strom výpočtu. Každý vrchol bude jedno zavolanie funkcie a bude ukazovať všetky argumenty.
+Na stránke vizualizácie si používateľ môže napísať svoju funkciu, ktorej stránka vytvorí
+a zobrazí strom výpočtu. Každý vrchol tohto stromu reprezentuje jedno zavolanie funkcie.
 
-Vrcholy budú vykresľované postupne, podľa poradia zavolania. Návratová hodnota zavolania
+Vrcholy budú vykresľované postupne, podľa poradia zavolania.
+Vykreslené vrcholy ukazujú všetky svoje argumenty. Návratová hodnota zavolania
 sa zobrazí hneď, ak funkcia samú seba ďalej nevolá. Ak volanie funkcie zavolá funkciu znova (alebo vrchol volania má deti),
 výsledok zobrazíme až keď všetci potomkovia jej vrchola v strome
 majú zobrazenú hodnotu. Týmto sa snažíme o to, aby používateľ lepšie videl, ako postupoval výpočet a v ktorom momente výpočtu
 boli spočítané ktoré návratové hodnoty.
 
-Vizualizácia bude vedieť pracovať aj s memoizáciou, čiže pamätaním si návratových hodnôt pre
+Vizualizácia vie pracovať aj s memoizáciou, čiže pamätaním si návratových hodnôt pre
 argumenty a odpovedanie z pamäte pri každom ďalšom zavolaní funkcie s rovnakými argumentmi.
-Pri výpočte s memoizáciou budeme zobrazovať aj zoznam argumentov a ich hodnôt, ktoré už boli vypočítané.
+Pri výpočte s memoizáciou vizualizácia zobrazuje aj zoznam argumentov a ich hodnôt, ktoré už boli vypočítané.
 V prípade vykreslenia vrcholu s argumentmi, pre ktoré hodnotu už poznáme, ukážeme aj na vrchol
 kde bola hodnota prvý krát vypočítaná.
 
@@ -123,20 +94,3 @@ Aj pre túto stránku si uvedieme možnosti, ktoré ponúka používateľovi:
 
 Uprednostníme počítanie a vytvorenie stromu pred vykreslením oproti počítaniu počas vykresľovania
 kvôli jednoduchšej implementácii počítania, ale aj vykresľovania samotného.
-
-Je možné implementovať aj spoluprácu s úlohami, kde by sa úloha mohla odkazovať
-na konkrétny vstup vizualizácie, napríklad formou linku ktorý používateľa presmeruje
-na stránku vizualizácie kde bude zadaný potrebný kód.
-
-V momentálnom návrhu ale pre túto funkciu nie je potreba, pretože rovnaký efekt docielime
-jednoducho napísaním potrebného kódu, ktorý používateľovi odporučíme skopírovať
-a vyhodnotiť vo vizualizácii manuálne. Oba spôsoby docielia rovnaký výsledok a
-automatické presmerovanie ušetrí iba málo používateľovho času takže ho považujeme
-za nepotrebné.
-
-Ďalšia možnosť pre budúci vývoj je napríklad ukázať iba strom výpočtu bez kódu, čo môžme
-využiť ako radu k úlohe alebo úplne nový typ úlohy, kde by používateľ musel
-nájsť funkciu, ktorá tento strom generuje.
-
-Vizualizácia výpočtu nám zjavne ponúka veľké množstvo možností, ktoré určite v budúcnosti využijeme
-pre zlepšenie výučbového procesu.
