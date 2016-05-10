@@ -218,19 +218,20 @@ odstránime terajší vrchol zo zásobníka a vrátime hodnotu.
 
 \subsection{Vykresľovanie}
 V tejto časti si najskôr opíšeme vykresľovanie rekurzie bez memoizácie. Potom
-si spomenieme, aké zmeny musíme implementovať ak chceme vykresliť aj výpočet s
+si spomenieme zmeny v implementácui pre výpočet s
 memoizáciou.
 
 V každom kroku buď odhalíme nový vrchol, alebo návratovú hodnotu jedného
 z už vykreslených vrcholov. Návratovú hodnotu vykreslíme zároveň s vrcholom iba pri listoch.
-Všetky ostatné vrcholy vykresľujeme bez návratovej hodnoty. Tú odhalíme, iba keď
+
+Všetky ostatné vrcholy najprv vykresľujeme bez návratovej hodnoty. Tú odhalíme, iba keď
 je odhalená návratová hodnota všetkých jeho detí. Tento prístup simuluje výpočet v ktorom
 poznáme návratovú hodnotu až vtedy, keď vyriešime všetky volania funkcie \lstinline[language=Javascript]{f}.
 Používateľ bude vďaka tomto prístupu mať lepší prehľad o tom, ktoré volanie funkcie ešte prebieha
 a ktoré je už ukončené návratom hodnoty.
 
 Pri vykresľovaní si pamätáme tri zoznamy: zásobník krokov, zoznam vykreslených a zásobník
-nevyriešených vrcholov . Vrchol je v zásobníku nevyriešených vrcholov práve vtedy,
+nevyriešených vrcholov. Vrchol je v zásobníku nevyriešených vrcholov práve vtedy,
 keď je vykreslený ale jeho hodnota ešte nie je odhalená. Na začiatku simulácie je
 koreň stromu vykreslený a označený za nevyriešený.
 
@@ -241,40 +242,47 @@ koreň stromu vykreslený a označený za nevyriešený.
 \end{figure}
 
 Implementujeme dve hlavné funkcie, \lstinline[language=Javascript]{nextStep} a
-\lstinline[language=Javascript]{stepBack}:
+\lstinline[language=Javascript]{stepBack} čiže krok vpred a krok vzad. Samotné
+vykresľovanie sa vykonáva vo funkcii \lstinline[language=Javascript]{redraw},
+ktorá podľa stavu vyššie uvedených zoznamov zobrazí strom na plátno.
 \subsubsection{Krok vpred}
 Pri zavolaní \lstinline[language=Javascript]{nextStep} urobíme krok iba vtedy,
-keď existuje aspoň jeden nevyriešený vrchol, pretože v opačnom prípade výpočet už skončil.
-Predpokladajme teda, že existuje aspoň jeden nevyriešený vrchol. Najprv si zoberieme
-posledný vrchol zo zásobníka nevyriešených a overíme, či sa ho podarilo v minulom kroku vyriešiť.
+keď existuje aspoň jeden nevyriešený vrchol. V opačnom prípade totiž výpočet už skončil.
+Predpokladajme teda, že zásobník nevyriešených vrcholov nie je prázdny. Najprv si zoberieme
+posledný vrchol z tohto zásobníka a overíme, či sa ho podarilo v minulom kroku vyriešiť (odhaliť
+poslednú potrebnú hodnotu).
+
 Ak áno, do zásobníka krokov pridáme jeho číslo, odstránime ho z nevyriešených vrcholov a
 vykreslíme jeho hodnotu.
 
 Ak nie, vykreslíme ďalší vrchol v zozname všetkých vrcholov. Do tohto zoznamu sme
-každý vrchol zapisovali medzi jeho vytvorením a zistením jeho hodnoty, preto
+každý vrchol zapisovali pred zistením jeho hodnoty (čiže vytváraním jeho detí), preto
 tento zoznam má vrcholy zoradené v poradí, v ktorom boli zavolané.
 
-Pri vykresľovaní ďalšieho vrcholu pridáme do zásobníka krokov -1 a ak je nevyriešený,
+Pri vykresľovaní ďalšieho vrcholu pridáme do zásobníka krokov -1 a ak nie je list,
 pridáme ho do zásobníka nevyriešených vrcholov.
 
-Po konci týchto úkonov prekreslíme celý strom.
+Po konci týchto úkonov zavoláme funkciu \lstinline[language=Javascript]{redraw}.
 \subsubsection{Krok vzad}
 Pri kroku vzad ako prvé vyberieme posledný krok zo zásobníka krokov. Ak bol tento
-krok väčší alebo rovný 0, vieme, že posledný krok bolo odhalenie hodnoty vrchola.
+krok \textbf{x} väčší alebo rovný 0, vieme, že posledný krok bolo odhalenie hodnoty vrchola s číslom \textbf{x}.
 Preto tento vrchol pridáme do zásobníka nevyriešených a skryjeme jeho výsledok.
 
 Ak však posledný krok v zásobníku bol -1, musíme skryť posledný odhalený vrchol.
 Ten teda odstránime zo zoznamu vykreslených vrcholov a ak je nevyriešený, tak aj
 zo zásobníka nevyriešených.
+
+Nakoniec tiež zavoláme \lstinline[language=Javascript]{redraw}.
 \subsection{Vykresľovanie s memoizáciou}
 Aby sa používatelia lepšie orientovali v memoizačnom výpočte, na ľavej strane
 vykresľovacieho plátna budeme ukazovať zapamätané hodnoty.
 
 Pri odhalení nového vrchola zistíme, či jeho hodnota bola získaná z pamäti.
 Ak áno, spojíme ho na jeden krok prerušovanou
-čiarou s vrcholom, v ktorom sme túto hodnotu vypočítali a uložili. Ak nebol získaný
-z pamäti, vykreslíme ho ako pri výpočte s memoizáciou.
+čiarou s vrcholom, v ktorom sme túto hodnotu vypočítali a uložili. Ak hodnota práve odhaleného vrchola
+ nebola získaná z pamäti, vykreslíme ho ako pri výpočte bez memoizácie.
 
+Odhaľovanie hodnoty doteraz nevyriešených vrcholov je rovnaké, ako bez memoizácie
 Pri odhaľovaní hodnoty doteraz nevyriešeného vrchola jeho hodnotu pridáme do vykreslenej pamäti.
 \begin{figure}[h]
 \includegraphics[width=\linewidth]{images/memoizacia.png}

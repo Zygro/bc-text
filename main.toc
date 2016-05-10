@@ -1,48 +1,59 @@
 \select@language {slovak}
 \contentsline {chapter}{\IeC {\'U}vod}{1}
-\contentsline {chapter}{\numberline {1}V\IeC {\'y}u\IeC {\v c}ba}{2}
-\contentsline {section}{\numberline {1.1}Proces v\IeC {\'y}u\IeC {\v c}by}{2}
-\contentsline {subsection}{\numberline {1.1.1}Postup \IeC {\'u}lohami}{2}
-\contentsline {subsection}{\numberline {1.1.2}Rady}{2}
-\contentsline {subsection}{\numberline {1.1.3}Bodovanie a rebr\IeC {\'\i }\IeC {\v c}ek}{3}
-\contentsline {subsection}{\numberline {1.1.4}Hodnotenie \IeC {\'u}loh}{3}
-\contentsline {subsection}{\numberline {1.1.5}Diskusia}{3}
-\contentsline {section}{\numberline {1.2}Prostredie}{4}
-\contentsline {subsection}{\numberline {1.2.1}Z\IeC {\'a}kladn\IeC {\'e} str\IeC {\'a}nky}{4}
-\contentsline {subsection}{\numberline {1.2.2}Detail \IeC {\'u}lohy}{4}
-\contentsline {subsection}{\numberline {1.2.3}Vizualiz\IeC {\'a}cia rekurz\IeC {\'\i }vnych v\IeC {\'y}po\IeC {\v c}tov}{4}
-\contentsline {chapter}{\numberline {2}Server}{6}
-\contentsline {section}{\numberline {2.1}Pou\IeC {\v z}it\IeC {\'e} technol\IeC {\'o}gie}{6}
-\contentsline {subsection}{\numberline {2.1.1}Django 1.9}{6}
-\contentsline {subsection}{\numberline {2.1.2}REST framework}{6}
-\contentsline {section}{\numberline {2.2}Testova\IeC {\v c}}{7}
-\contentsline {subsection}{\numberline {2.2.1}Stiahnutie vstupov a poslanie v\IeC {\'y}stupov}{7}
-\contentsline {subsection}{\numberline {2.2.2}Testovanie skriptom u pou\IeC {\v z}ivate\IeC {\v l}a}{7}
-\contentsline {subsection}{\numberline {2.2.3}Testovanie na servri}{8}
-\contentsline {section}{\numberline {2.3}Bezpe\IeC {\v c}nos\IeC {\v t}}{8}
-\contentsline {subsection}{\numberline {2.3.1}Autoriz\IeC {\'a}cia}{8}
-\contentsline {subsection}{\numberline {2.3.2}Prihlasovanie cez extern\IeC {\'e} port\IeC {\'a}ly}{9}
-\contentsline {subsection}{\numberline {2.3.3}Protokoly}{9}
-\contentsline {section}{\numberline {2.4}Administr\IeC {\'a}cia a zbieranie d\IeC {\'a}t}{9}
-\contentsline {subsection}{\numberline {2.4.1}Prid\IeC {\'a}vanie a hodnotenie \IeC {\'u}loh}{9}
-\contentsline {subsection}{\numberline {2.4.2}Zbieranie d\IeC {\'a}t o pou\IeC {\v z}ivate\IeC {\v l}och}{10}
-\contentsline {subsection}{\numberline {2.4.3}Zbieranie d\IeC {\'a}t o \IeC {\'u}loh\IeC {\'a}ch}{10}
-\contentsline {subsection}{\numberline {2.4.4}Opr\IeC {\'a}vnenia pou\IeC {\v z}ivate\IeC {\v l}a a administr\IeC {\'a}tora}{11}
-\contentsline {chapter}{\numberline {3}Dokument\IeC {\'a}cia str\IeC {\'a}nok}{12}
-\contentsline {section}{\numberline {3.1}Str\IeC {\'a}nky a ich adresy}{12}
-\contentsline {subsection}{\numberline {3.1.1}Komunik\IeC {\'a}cia so servrom}{12}
-\contentsline {chapter}{\numberline {4}Dokument\IeC {\'a}cia servra}{15}
-\contentsline {section}{\numberline {4.1}Modely}{15}
-\contentsline {subsection}{\numberline {4.1.1}Lesson - \IeC {\'u}loha}{15}
-\contentsline {subsection}{\numberline {4.1.2}User - pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}}{16}
-\contentsline {subsection}{\numberline {4.1.3}Submit - rie\IeC {\v s}enie}{17}
-\contentsline {subsection}{\numberline {4.1.4}Comment - koment\IeC {\'a}r}{17}
-\contentsline {subsection}{\numberline {4.1.5}Hint - rada}{17}
-\contentsline {subsection}{\numberline {4.1.6}Rating - hodnotenie}{18}
-\contentsline {subsection}{\numberline {4.1.7}LessonStat - \IeC {\v s}tatistika \IeC {\'u}lohy}{18}
-\contentsline {subsection}{\numberline {4.1.8}UserStat - \IeC {\v s}tatistika pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}a}{19}
-\contentsline {subsection}{\numberline {4.1.9}UserLessonWrapper - obal pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}-\IeC {\'u}loha}{19}
-\contentsline {section}{\numberline {4.2}Pomocn\IeC {\'e} funkcie}{19}
-\contentsline {subsection}{\numberline {4.2.1}Testova\IeC {\v c}}{19}
-\contentsline {subsection}{\numberline {4.2.2}Pos\IeC {\'u}vanie \IeC {\'u}loh}{20}
-\contentsline {chapter}{Z\IeC {\'a}ver}{23}
+\contentsline {chapter}{\numberline {1}\IeC {\v S}pecifik\IeC {\'a}cie projektu}{2}
+\contentsline {section}{\numberline {1.1}Popis}{2}
+\contentsline {section}{\numberline {1.2}U\IeC {\v c}ebn\IeC {\'y} proces}{2}
+\contentsline {section}{\numberline {1.3}Prihlasovanie a opr\IeC {\'a}vnenia}{2}
+\contentsline {chapter}{\numberline {2}N\IeC {\'a}vrh pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}sk\IeC {\'e}ho prostredia}{4}
+\contentsline {section}{\numberline {2.1}Proces v\IeC {\'y}u\IeC {\v c}by}{4}
+\contentsline {subsection}{\numberline {2.1.1}Postup \IeC {\'u}lohami}{4}
+\contentsline {subsection}{\numberline {2.1.2}Rady}{4}
+\contentsline {subsection}{\numberline {2.1.3}Bodovanie a rebr\IeC {\'\i }\IeC {\v c}ek}{5}
+\contentsline {subsection}{\numberline {2.1.4}Hodnotenie \IeC {\'u}loh}{5}
+\contentsline {subsection}{\numberline {2.1.5}Diskusia}{5}
+\contentsline {section}{\numberline {2.2}Prostredie}{6}
+\contentsline {subsection}{\numberline {2.2.1}Z\IeC {\'a}kladn\IeC {\'e} str\IeC {\'a}nky}{6}
+\contentsline {subsection}{\numberline {2.2.2}Detail \IeC {\'u}lohy}{6}
+\contentsline {subsection}{\numberline {2.2.3}Vizualiz\IeC {\'a}cia rekurz\IeC {\'\i }vnych v\IeC {\'y}po\IeC {\v c}tov}{6}
+\contentsline {chapter}{\numberline {3}N\IeC {\'a}vrh servra}{8}
+\contentsline {section}{\numberline {3.1}Pou\IeC {\v z}it\IeC {\'e} technol\IeC {\'o}gie}{8}
+\contentsline {subsection}{\numberline {3.1.1}Django 1.9}{8}
+\contentsline {subsection}{\numberline {3.1.2}REST framework}{8}
+\contentsline {section}{\numberline {3.2}Testova\IeC {\v c}}{9}
+\contentsline {subsection}{\numberline {3.2.1}Stiahnutie vstupov a poslanie v\IeC {\'y}stupov}{9}
+\contentsline {subsection}{\numberline {3.2.2}Testovanie skriptom u pou\IeC {\v z}ivate\IeC {\v l}a}{9}
+\contentsline {subsection}{\numberline {3.2.3}Testovanie na servri}{10}
+\contentsline {section}{\numberline {3.3}Bezpe\IeC {\v c}nos\IeC {\v t}}{10}
+\contentsline {subsection}{\numberline {3.3.1}Autoriz\IeC {\'a}cia}{10}
+\contentsline {subsection}{\numberline {3.3.2}Prihlasovanie cez extern\IeC {\'e} port\IeC {\'a}ly}{11}
+\contentsline {section}{\numberline {3.4}Administr\IeC {\'a}cia a zbieranie d\IeC {\'a}t}{11}
+\contentsline {subsection}{\numberline {3.4.1}Prid\IeC {\'a}vanie a hodnotenie \IeC {\'u}loh}{11}
+\contentsline {subsection}{\numberline {3.4.2}Zbieranie d\IeC {\'a}t o pou\IeC {\v z}ivate\IeC {\v l}och}{12}
+\contentsline {subsection}{\numberline {3.4.3}Zbieranie d\IeC {\'a}t o \IeC {\'u}loh\IeC {\'a}ch}{12}
+\contentsline {subsection}{\numberline {3.4.4}Opr\IeC {\'a}vnenia pou\IeC {\v z}ivate\IeC {\v l}a a administr\IeC {\'a}tora}{13}
+\contentsline {chapter}{\numberline {4}Dokument\IeC {\'a}cia pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}sk\IeC {\'e}ho prostredia}{14}
+\contentsline {section}{\numberline {4.1}Str\IeC {\'a}nky a ich adresy}{14}
+\contentsline {subsection}{\numberline {4.1.1}Komunik\IeC {\'a}cia so servrom}{14}
+\contentsline {section}{\numberline {4.2}Vizualiz\IeC {\'a}cia}{16}
+\contentsline {subsection}{\numberline {4.2.1}Form\IeC {\'a}t}{16}
+\contentsline {subsection}{\numberline {4.2.2}Pr\IeC {\'\i }prava}{17}
+\contentsline {subsection}{\numberline {4.2.3}Tvorba stromu v\IeC {\'y}po\IeC {\v c}tu}{17}
+\contentsline {subsection}{\numberline {4.2.4}Vykres\IeC {\v l}ovanie}{18}
+\contentsline {subsubsection}{Krok vpred}{19}
+\contentsline {subsubsection}{Krok vzad}{20}
+\contentsline {subsection}{\numberline {4.2.5}Vykres\IeC {\v l}ovanie s memoiz\IeC {\'a}ciou}{20}
+\contentsline {chapter}{\numberline {5}Dokument\IeC {\'a}cia servra}{22}
+\contentsline {section}{\numberline {5.1}Modely}{22}
+\contentsline {subsection}{\numberline {5.1.1}Lesson - \IeC {\'u}loha}{22}
+\contentsline {subsection}{\numberline {5.1.2}User - pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}}{23}
+\contentsline {subsection}{\numberline {5.1.3}Submit - rie\IeC {\v s}enie}{24}
+\contentsline {subsection}{\numberline {5.1.4}Comment - koment\IeC {\'a}r}{24}
+\contentsline {subsection}{\numberline {5.1.5}Hint - rada}{24}
+\contentsline {subsection}{\numberline {5.1.6}Rating - hodnotenie}{25}
+\contentsline {subsection}{\numberline {5.1.7}LessonStat - \IeC {\v s}tatistika \IeC {\'u}lohy}{25}
+\contentsline {subsection}{\numberline {5.1.8}UserStat - \IeC {\v s}tatistika pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}a}{26}
+\contentsline {subsection}{\numberline {5.1.9}UserLessonWrapper - obal pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}-\IeC {\'u}loha}{26}
+\contentsline {section}{\numberline {5.2}Pomocn\IeC {\'e} funkcie}{26}
+\contentsline {subsection}{\numberline {5.2.1}Testova\IeC {\v c}}{27}
+\contentsline {subsection}{\numberline {5.2.2}Pos\IeC {\'u}vanie \IeC {\'u}loh}{27}
+\contentsline {chapter}{Z\IeC {\'a}ver}{30}

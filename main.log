@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.6)  4 MAY 2016 22:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.6)  8 MAY 2016 21:54
 entering extended mode
 **main.tex
 (main.tex
@@ -620,7 +620,11 @@ Package: color 2014/10/28 v1.1a Standard LaTeX Color (DPC)
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 142.
-) (main.aux)
+) (main.aux
+
+LaTeX Warning: Label `obr:memo' multiply defined.
+
+)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
 LaTeX Font Info:    ... okay on input line 55.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
@@ -635,8 +639,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
 LaTeX Font Info:    ... okay on input line 55.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 55.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 55.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 55.
@@ -711,34 +714,38 @@ Overfull \hbox (4.82378pt too wide) in paragraph at lines 134--135
 ])
 \tf@toc=\write5
  [7] (uvod.tex)
-(front-end.tex [1
+(specifikacie.tex [1
 
 
 ]
 Kapitola 1.
 [2
 
+]) (front-end.tex [3]
+Kapitola 2.
+[4
+
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 36--43
 
  []
 
-[3]
+[5]
 Overfull \hbox (0.55951pt too wide) in paragraph at lines 99--101
 []\T1/cmr/m/n/12 Na stránke vi-zu-ali-zá-cie si po-u-ºí-va-te© bude môc´ na-pí-
 sa´ svoju fun-kciu, kto-rej stránka
  []
 
-[4]) (server.tex [5]
-Kapitola 2.
-[6
-
-] [7] [8] [9] [10]) (front-end-impl.tex [11]
+[6]) (server.tex [7]
 Kapitola 3.
+[8
+
+] [9] [10] [11] [12]) (front-end-impl.tex [13]
+Kapitola 4.
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 55.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [12
+) [14
 
 ]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
@@ -748,17 +755,51 @@ Underfull \hbox (badness 10000) in paragraph at lines 85--87
 
  []
 
-[13]) (dokumentacia.tex [14]
-Kapitola 4.
-[15
+[15]
+Overfull \hbox (9.1603pt too wide) in paragraph at lines 132--134
+[]\T1/cmr/m/n/12 Na vy-hod-no-te-nie fun-kcie po-u-ºí-vame Ja-vasc-ript a na vy
+-kres-©o-va-nie po-u-ºí-vame HTML5
+ []
+
+[16] [17]
+Underfull \hbox (badness 10000) in paragraph at lines 196--203
+
+ []
+
+[18] <images/bezMemo.png, id=213, 540.51938pt x 484.81125pt>
+File: images/bezMemo.png Graphic file (type png)
+
+<use images/bezMemo.png>
+Package pdftex.def Info: images/bezMemo.png used on input line 237.
+(pdftex.def)             Requested size: 441.02663pt x 395.57263pt.
+ [19 <./images/bezMemo.png>]
+<images/memoizacia.png, id=219, 846.91406pt x 511.9125pt>
+File: images/memoizacia.png Graphic file (type png)
+
+<use images/memoizacia.png>
+Package pdftex.def Info: images/memoizacia.png used on input line 279.
+(pdftex.def)             Requested size: 441.01773pt x 266.57097pt.
+)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+(dokumentacia.tex [20] [21 <./images/memoizacia.png>]
+Kapitola 5.
+
+Overfull \hbox (2.5407pt too wide) in paragraph at lines 37--43
+\T1/cmr/m/n/12 Django ser-very sle-dujú ná-vrhový vzor Model-View-Controller (M
+VC). V prí-pade Django
+ []
+
+[22
 
 ]
-Overfull \hbox (5.00122pt too wide) in paragraph at lines 81--83
+Overfull \hbox (5.00122pt too wide) in paragraph at lines 83--85
 []\T1/cmr/bx/n/12 password\T1/cmr/m/n/12 : heslo po-u-ºí-va-te©a, ukla-dané po-
 mo-cou hash fun-kcie po-sky-to-va-nej REST
  []
 
-[16] [17] [18] [19] [20] [21]) (zaver.tex [22]) [23
+[23] [24] [25] [26] [27] [28]) (zaver.tex [29]) [30
 
 ] (main.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 14--18
@@ -766,43 +807,47 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--18
  mozilla . org / en / docs / Web /$
  []
 
-) [24
+) [31
 
 
 
-] (main.aux) ) 
+] (main.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 6391 strings out of 493673
- 84805 string characters out of 3143150
- 284036 words of memory out of 3000000
- 9614 multiletter control sequences out of 15000+200000
+ 6410 strings out of 493673
+ 85149 string characters out of 3143150
+ 258102 words of memory out of 3000000
+ 9628 multiletter control sequences out of 15000+200000
  20393 words of font info for 48 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 33i,6n,40p,598b,1226s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappe
-n\ec\dpi600\ectt1200.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
-ur\jknappen\ec\dpi600\ecrm1095.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fon
-ts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk> <C:\Users\Zygro\AppData\Local\MiKT
-eX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1095.pk> <C:\Users\Zygro\AppData\
-Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\Users\Zygr
-o\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk> <C:\
-Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx144
-0.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
-00\ecsl1200.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknapp
-en\ec\dpi600\ecbx2488.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljf
-our\jknappen\ec\dpi600\ecbx1728.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fo
-nts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\Zygro\AppData\Local\MiK
-TeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\Zygro\AppData
-\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\eccc2074.pk> <C:\Users\Zyg
-ro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\eccc1440.pk><C:/
-Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Pr
-ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Prog
-ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program
- Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Fi
-les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (32 pages, 381394 bytes).
+ 33i,7n,40p,263b,1764s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\
+ectt1200.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\
+ec\dpi600\ecrm1095.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour
+\jknappen\ec\dpi600\ecrm1000.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts
+\pk\ljfour\jknappen\ec\dpi600\ectt1095.pk> <C:\Users\Zygro\AppData\Local\MiKTeX
+\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\Users\Zygro\AppData\Lo
+cal\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\Zygro\
+AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk> <C:\Us
+ers\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsl1200.
+pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600
+\ecbx2488.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen
+\ec\dpi600\ecbx1728.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfou
+r\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\Zygro\AppData\Local\MiKTeX\2.9\font
+s\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\Zygro\AppData\Local\MiKTe
+X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\eccc2074.pk> <C:\Users\Zygro\AppData\L
+ocal\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\eccc1440.pk><C:/Program File
+s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files 
+(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files (x
+86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files (x86)
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on main.pdf (39 pages, 447951 bytes).
 PDF statistics:
- 835 PDF objects out of 1000 (max. 8388607)
+ 882 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
