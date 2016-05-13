@@ -1,0 +1,75 @@
+\chapter{Budúci vývoj}
+V tejto záverečnej kapitole si určíme ciele budúceho vývoja.
+
+\section{Bodovanie a rebríček}
+\label{score}
+Každý používateľ bude mať skóre, ktoré ukazuje jeho postup učebným procesom.
+
+Všetky správne vyriešené úlohy (povinné aj nepovinné)
+pridajú používateľovi do skóre svoju úroveň. Napríklad prvá úloha sa ráta za
+1 bod a úloha na vyššej, povedzme piatej úrovni pridá 5 bodov.
+\newline
+\newline
+Používatelia budú mať aj možnosť pozrieť si svoje poradie v rebríčku a porovnať sa
+s ostatnými používateľmi. Sú dva rôzne rebríčky: rebríček úrovní a rebríček skóre.
+
+Každý používateľ bude môcť vidieť v rebríčkoch seba a všetkých ostatných používateľov ktorí
+budú súhlasiť so zverejnením svojho skóre (používateľ bude môcť tento súhlas vo svojom profile kedykoľvek zmeniť).
+
+K rebríčkom bude mať prístup aj používateľ, ktorý nesúhlasí so zverejnením svojej úrovne a skóre.
+Takýto používateľ stále bude vidieť svoje poradie v porovnaní s ostatnými používateľmi tak isto
+ako ostatní používatelia s tou zmenou, že sa nezobrazí v rebríčkoch ostatným používateľom.
+
+\section{Diskusia}
+\label{future:disc}
+V momentálnom návrhu je celá diskusia prístupná všetkým používateľom ktorí majú
+prístup k úlohe, z čoho ale môže vzniknúť problém prezrádzania správnych riešenie
+ostatným používateľom, ktorí ešte úlohu nevyriešili.
+
+Ak tento problém vznikne, budeme musieť rozdeliť diskusiu na dve: pre tých používateľov, čo úlohu vyriešili a pre tých čo ešte nie.
+
+Ak budú stále pretrvávať problémy (napríklad používateľ prezradí riešenie skôr ako ho odovzdá na testovanie),
+môžme povoliť diskusiu iba pre úspešných riešiteľov.
+
+Toto riešenie ale môže byť v rozpore s účelom diskusie, nakoľko sa môže stať, že používatelia sa po vyriešení úlohy
+o ňu prestanú zaujímať. Preto riešenie tohto problému zatiaľ necháme na administrátorovi, aby zmazal všetky diskusné
+príspevky s radami, ktoré príliš zjednodušujú úlohu a iným nevhodným obsahom.
+
+\section{Vizualizácia}
+Je možné implementovať aj spoluprácu vizualizácie s úlohami, kde by sa úloha mohla odkazovať
+na konkrétny vstup vizualizácie, napríklad formou linku ktorý používateľa presmeruje
+na stránku vizualizácie kde bude zadaný potrebný kód.
+
+V momentálnom návrhu ale pre túto funkciu nie je potreba, pretože rovnaký efekt docielime
+jednoducho napísaním potrebného kódu, ktorý používateľovi odporučíme skopírovať
+a vyhodnotiť vo vizualizácii manuálne. Oba spôsoby docielia rovnaký výsledok a
+automatické presmerovanie ušetrí iba málo používateľovho času takže ho považujeme
+za nepotrebné.
+
+Ďalšia možnosť pre budúci vývoj je napríklad ukázať iba strom výpočtu bez kódu, čo môžme
+využiť ako radu k úlohe alebo úplne nový typ úlohy, kde by používateľ musel
+nájsť funkciu, ktorá tento strom generuje.
+
+Vizualizácia výpočtu nám zjavne ponúka veľké množstvo možností, ktoré určite v budúcnosti využijeme
+pre zlepšenie výučbového procesu.
+
+\section{Prihlasovanie cez externé portály}
+\label{oAuth}
+Portál bude mať okrem priamej registrácie na server viacero možností prihlasovania sa cez externé portály.
+Použijeme prihlasovaciu schému OAuth 2.0, aby komunikácia s externým
+portálom prebiehala iba pri prihlasovaní po ktorom používateľov prehliadač
+komunikuje so serverom ako keby sa prihlásil priamo na náš portál bez využitia externej služby.
+
+Prihlasovanie cez OAuth 2.0 prebieha nasledovne \cite{FBlogin}:
+\begin{enumerate}
+\item{používateľ sa prihlási na externý portál a potvrdí našej aplikácii vyžiadané oprávnenia}
+\item{Od externého portálu získa prístupový token na ten externý portál}
+\item \label{secret}{Tento token pošle nášmu serveru}
+\item{Náš server pošle token externému portálu spolu s tajným ID našej aplikácie, aby externý portál vedel, že požiadavka prišla od našej aplikácie}
+\item{Ak externý portál potvrdí požiadavku, náš server vráti používateľovi náš token a
+    ďalšia komunikácia prebieha iba s týmto novým tokenom ako pri obyčajnej autentifikácii}
+\end{enumerate}
+
+Pomocou tejto schémy sa bude dať prihlásiť cez Facebook, Google+ a GitHub.
+\newline
+Tajné ID použité v kroku \ref{secret} bude prístupné iba administrátorom.
