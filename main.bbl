@@ -3,27 +3,25 @@
 \bibitem{Django}
 Django documentation.
 \newblock \url{https://docs.djangoproject.com/en/1.9/}.
-\newblock [2015-12-07].
+\newblock [2016-5-10].
 
 \bibitem{FBlogin}
 Facebook login for the web with the javascript sdk.
 \newblock \url{https://developers.facebook.com/docs/facebook-login/web}.
 \newblock [2015-12-07].
 
-\bibitem{Promise}
-Javascript promise.
-\newblock
-  \url{https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise}.
-\newblock [2015-12-07].
+\bibitem{rest}
+Rest framework documentation.
+\newblock \url{http://www.django-rest-framework.org/}.
+\newblock [2016-5-10].
 
-\bibitem{React}
-React documentation.
-\newblock \url{https://facebook.github.io/react/index.html}.
-\newblock [2015-12-07].
+\bibitem{misof}
+Michal Foríšek.
+\newblock Security of programming contest systems.
+\newblock {\em Information Technologies at School 2006, pp. 553--563.}
 
-\bibitem{Scoops2015}
-Daniel~Roy Greenfield and Auderey~Roy Greenfield.
-\newblock {\em Two Scoops of Django: Best Practices for Django 1.8}.
-\newblock Two Scoops Press, 2015.
+\bibitem{mares}
+Bernard~Blackham Martin~Mareš.
+\newblock A new contest sandbox.
 
 \end{thebibliography}

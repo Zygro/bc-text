@@ -1,4 +1,4 @@
-\chapter{Dokumentácia servra}
+\chapter{Dokumentácia servera}
 \label{kap:doc}
 
 \lstdefinelanguage{Python}{
@@ -30,11 +30,11 @@
 }
 
 
-V tejto kapitole sa pozrieme na prvú pracovnú implementáciu servra. Oboznámime sa
+V tejto kapitole sa pozrieme na prvú pracovnú implementáciu servera. Oboznámime sa
 s modelmi, pohľadmi a niektorými funkciami, ich možnosťami a použitím.
 \section{Modely}
 \label{modely}
-Django servery sledujú návrhový vzor Model-View-Controller (MVC). V prípade Django servrov, model je tabuľka
+Django servery sledujú návrhový vzor Model-View-Controller (MVC)\cite{Django}. V prípade Django servrov, model je tabuľka
 databázy a view je spôsob zobrazenia (napríklad vo forme HTML stránky). Pre pochopenie
 funkcionality je dôležité vedieť, aké modely a pohľady používame a ako medzi sebou interagujú.
 \newline
@@ -45,7 +45,7 @@ Pri každom modeli spomenieme jeho názov v implementácii a slovenský ekvivale
 Django frameworkom)
 \subsection{Lesson - úloha}
 \label{doc:lesson}
-Ako prvý si predstavíme asi najdôležitejší model servra, ktorý obsahuje zadanie a
+Ako prvý si predstavíme asi najdôležitejší model servera, ktorý obsahuje zadanie a
 testovacie dáta úlohy.
 
 Úlohy majú tieto polia:
@@ -181,7 +181,7 @@ V momentálnej implementácii zbierame iba jeden údaj pre používateľov, ktor
 na zisťovanie, ktoré úlohy používateľovi sprístupniť. Narozdiel od modelu \textbf{LessonStat} (\ref{modelLessonStat}),
 táto štatistika je prístupná používateľovi, pretože ide o jeho výsledky.
 
-Tento model bude vo finálnej obsahovať napríklad aj skóre používateľa, ktoré
+Tento model bude vo finálnom produkte obsahovať napríklad aj skóre používateľa, ktoré
 bude podľa priania používateľa zverejnené v rebríčku (\ref{score})
 
 Polia:
@@ -268,8 +268,8 @@ Algoritmus zarovnávania sleduje tieto kroky:
 \begin{itemize}
 \item Všetky povinné úlohy posunieme tak, aby neboli žiadne medzery v poradí.
 \item všetky povinné úlohy čo majú úroveň väčšiu alebo rovnú úrovni upravovanej/pridanej
- úlohy posununieme o jednu úroveň vyššie (upravovaná/pridaná úloha nie je posunutá).
-\item všetky úlohy znovu posununieme tak, aby sme vyplnili medzery (pretože predošlý krok mohol
+ úlohy posunieme o jednu úroveň vyššie (upravovaná/pridaná úloha nie je posunutá).
+\item všetky úlohy znovu posunieme tak, aby sme vyplnili medzery (pretože predošlý krok mohol
     vytvoriť nové medzery ak presúvame existujúcu úlohu na vyššiu úroveň)
 \item nakoniec pridáme ukladanú úlohu a zarovnáme ju tiež, nakoľko administrátor mohol urobiť chybu a pridať úlohu
     s číslom väčším ako počet povinných úloh a teda by bola nedosiahnuteľná.

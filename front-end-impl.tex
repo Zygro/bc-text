@@ -32,7 +32,7 @@
 
 \label{kap:frontImpl}
 V tejto kapitole si priblížime implementáciu prednej časti portálu, s ktorou
-budú používatelia interagovať. Povieme si komunikácii so servrom ale aj o
+budú používatelia interagovať. Povieme si komunikácii so serverom ale aj o
 implementácii vizualizácie rekurzívnych výpočtov.
 \section{Stránky a ich adresy}
 V prvej pracovnej verzii sú implementované tieto stránky (uvedené s URL adresami)
@@ -48,8 +48,8 @@ V prvej pracovnej verzii sú implementované tieto stránky (uvedené s URL adre
 Administrátorské prostredie je predvolené prostredie Django frameworku bez modifikácií.
 Toto prostredie poskytuje všetky požadované možnosti (prezeranie, pridávanie, úprava
 a mazanie objektov) vo veľmi prehľadnej a jednoduchej forme.
-\subsection{Komunikácia so servrom}
-Na komunikáciu so servrom používame hlavne knižnicu jQuery, konkrétne asynchronickú metódu AJAX, kvôli jej jednoduchému
+\subsection{Komunikácia so serverom}
+Na komunikáciu so serverom používame hlavne knižnicu jQuery, konkrétne asynchronickú metódu AJAX, kvôli jej jednoduchému
 používaniu a podpore pridania autorizačnej hlavičky. Autorizačná hlavička
 je údaj v hlavičke HTTP požiadavky ktorý určuje totožnosť používateľa, v našom prípade napríklad
 \lstinline[language=Javascript]|{'Authorization': 'Token a5b498587e33d1f44a97c2328618dd15373b0705'}|.
@@ -63,50 +63,47 @@ Potom token môžme kedykoľvek získať pomocou zavolania metódy
 Väčšina požiadaviek ktoré posielame na server sú si veľmi podobné, preto uvedieme
 iba jednu typickú požiadavku:
 
-\begin{lstlisting}[ language = Javascript, title = Požiadavka na získanie zadania jednej úlohy]
+\begin{lstlisting}[ language = Javascript, title = Požiadavka na získanie rád k úlohe]
 $.ajax({
-   url: "../../api/lesson/"+id+"/",
-   type: "GET",
-   headers: {'Authorization':'Token '+localStorage.getItem('token')},
-   success: function(data) {
-     title = document.getElementById("title")
-     title.innerHTML = "Lesson "+data['name']
-     problem = document.getElementById("problem")
-     problem.innerHTML = "Lesson "+data['problem']
-   },
-   error: function(data) {
-     if (data.status==401) {
-       window.location.replace("../../user/login/")
-     }
-   }
+  url: "../../api/hints/"+id,
+  type: "GET",
+  headers: {'Authorization':'Token '+localStorage.getItem('token')},
+  success: function(data) {
+    hintTarget = document.getElementById("hints")
+    var hintArray = []
+    for (var i = 0; i < data.length; i++) {
+      hintTarget.innerHTML += "<li>"+data[i].text+"</li>"
+    }
+  },
+  error: function(data) {
+    if (data.status==401) {
+      window.location.replace("../../user/login/")
+    }
+  }
 });
 \end{lstlisting}
-\textit{(v tomto príklade je požiadavka trochu zmenená oproti implementácii, aby bola v texte
-prehľadnejšia)}
-\newline
 
-Tento a viacero iných podobných požiadavok posielame vždy pri načítaní stránky
+Tento a viacero iných podobných, požiadavok posielame vždy pri načítaní stránky
 prehliadačom, aby sme získali dáta ktoré chceme zobraziť.
 
 Teraz si vysvetlíme niektoré časti tohto kódu:\newline
 V druhom riadku používame premennú id, ktorá označuje unikátne identifikačné číslo
 úlohy. Toto číslo získame z URL zobrazenej stránky ako prvú vec pri načítaní.
 
-Vo štvrtom riadku pridávame autorizačnú hlavičku, podĺa spôsobu, aký sme popísali vyššie.
+Vo štvrtom riadku pridávame autorizačnú hlavičku, podľa spôsobu, aký sme popísali vyššie.
 
-V piatom až desiatom riadku deklarujeme správanie pri úspešnom získaní odpovede
-od servra, v tomto prípade zobrazujeme názov a zadanie úlohy v na to určených
-HTML elementoch stránky.
+Pod kľúčom \lstinline[language=Javascript]|success| deklarujeme správanie pri úspešnom získaní odpovede
+od servra, v tomto prípade zobrazujeme získané rady v zozname.
 
-V jedenástom až päťnástom riadku deklarujeme správanie sa pri chybe. Zatiaľ jediná
-chyba, na ktorú reagujeme je 401-UNAUTHORIZED ktorú dostaneme ak posielame
+Pod kľúčom \lstinline[language=Javascript]|fail| deklarujeme správanie sa pri chybe. Zatiaľ jediná
+chyba, na ktorú reagujeme je 401-UNAUTHORIZED. Tú dostaneme, ak posielame
 správu s nesprávnym alebo úplne chýbajúcim tokenom. V tom prípade používateľa presmerujeme
-na prihlasovaciu stránku. Toto správanie je použíté v každej požiadavke, ktorá
+na prihlasovaciu stránku. Toto správanie je použité v každej požiadavke, ktorá
 vyžaduje autentifikáciu.
 
 Odosielanie na server je o trochu iné, pretože používa metódu POST a musíme pridať
 aj posielané dáta. To najčastejšie robíme pomocou pridania \newline
-\lstinline[language=Javascript]{data : $("#form").serialize()}, čo nám dáta
+\lstinline[language=Javascript]{data : $("#form_id").serialize()}, čo nám dáta
 získa priamo z hodnôt vo formulári.
 
 jQuery má ale obmedzenie, že kvôli bezpečnosti nedokáže zapisovať do súborov na disku.
@@ -120,17 +117,21 @@ Tento problém nepovažujeme za závažný, pretože bez zadania úlohy je malá
 túto úlohu vyrieši. Ďalej, vo finálnom produkte testovač nebude vyžadovať sťahovanie
 dát, čím bude tento problém úplne odstránený.
 
-Rovnako, jQuery má ťažkosti s posielaním súborov (skoršie verzie dokonca neodkážu
-posielať súbory). Preto na posielanie riešení používame formát XMLHttpRequest, ktorý
+Rovnako, jQuery má ťažkosti s posielaním súborov bez použitia ďalších pluginov.
+Preto na posielanie riešení používame formát XMLHttpRequest, ktorý
 funguje podobne ako AJAX, preto si ho ďalej približovať nebudeme.
 
 \section{Vizualizácia}
-Vizualizácia rekurzívnych výpočtov (ďalej len vizualizácia) má za úlohu z používateĺovej
+Vizualizácia rekurzívnych výpočtov (ďalej len vizualizácia) má za úlohu z používateľovej
 funkcie vytvoriť strom jej výpočtu a ten prehľadne vykresliť. Naša implementácia
 najskôr vygeneruje celý strom a až potom ho používateľovi zobrazí.
 
-Na vyhodnotenie funkcie používame Javascript a na vykresľovanie používame HTML5 objekt canvas,
-teda všetok kód vizualizácie je v HTML dokumente, čo znamená že vizualizácia nijak nekomunikuje so servrom.
+Štýl vizualizácie a niektoré časti implementácie sú inšpirované projektom
+VisuAlgo. Tento projekt tiež obsahuje vizualizáciu rekurzívnych výpočtov \cite{visualgo},
+ale zobrazovanie memoizačných výpočtov v tomto projekte je pre naše účely nepostačujúce.
+
+Na vyhodnotenie funkcie používame Javascript a na vykresľovanie používame HTML5 objekt canvas.
+Vďaka tomu všetok kód vizualizácie je v HTML dokumente, čo znamená že vizualizácia nijak nekomunikuje so serverom.
 
 Popis implementácie vizualizácie si rozdelíme na štyri časti. Najskôr si spomenieme
 formát a obmedzenia zadávateľných funkcií. Ako druhé si opíšeme kroky
@@ -143,7 +144,7 @@ vstup budeme načítavať z dvoch textových vstupov: v jednom napíše názvy p
 a ich počiatočné hodnoty a v druhom samotné telo funkcie.
 \subsection{Príprava}
 Po stlačení tlačidla Evaluate si uložíme kód do textovej premennej. Parametre si uložím
-ako reťazec v ktorom sú jednotlivé parametre oddelované čiarkami a argumenty si
+ako reťazec v ktorom sú jednotlivé parametre oddeľované čiarkami a argumenty si
 uložím do jednorozmerného poľa. Potom pomocou Javascriptovej funkcie \lstinline[language=Javascript]{eval}
 si vstupný kód a parametre prevediem na funkciu ktorú si uložím pod menom \lstinline[language=Javascript]{originalFunction}.
 
@@ -195,7 +196,7 @@ bez memoizácie.
 
 Teraz overíme, či vrcholov nie je viac ako 1000. Ak áno, výpočet zastavíme
 a používateľovi ukážeme chybovú hlášku. Týmto zabránime nekonečnému volaniu a príliš
-veľkým a pamäťovo náročným simuláciam.
+veľkým a pamäťovo náročným simuláciám.
 \newline
 \newline
 Aby sme zistili návratovú hodnotu, pridáme vrchol do zásobníka a ako
@@ -218,7 +219,7 @@ odstránime terajší vrchol zo zásobníka a vrátime hodnotu.
 
 \subsection{Vykresľovanie}
 V tejto časti si najskôr opíšeme vykresľovanie rekurzie bez memoizácie. Potom
-si spomenieme zmeny v implementácui pre výpočet s
+si spomenieme zmeny v implementácii pre výpočet s
 memoizáciou.
 
 V každom kroku buď odhalíme nový vrchol, alebo návratovú hodnotu jedného

@@ -131,7 +131,7 @@ Fakulta matematiky, fyziky a informatiky
 
 \newpage
 \thispagestyle{empty}
-\hspace{-2cm}\includegraphics[width=1.1\textwidth]{images/zadanie}
+\centerline{\includegraphics[width=\paperwidth]{images/zadanie}}
 
 % --- Koniec zadania
 
@@ -158,11 +158,12 @@ Táto práca sa zaoberá implementáciou interaktívneho portálu na vyučovanie
 dynamického programovania. Výučba na našom portáli prebieha hlavne riešením
 implementačných úloh, ktoré automaticky testujeme. Portál má aj kapacitu
 sledovať postup používateľov a náročnosť úloh. Práca obsahuje aj
-interaktívnu vizualizáciu rekurzívnych výpočtov a memoizácie.
+interaktívnu vizualizáciu rekurzívnych a memoizovaných funkcií.
 
 Portál pozostáva z Django databázového servera a jednoduchého HTML používateľského prostredia.
 
-\paragraph*{Kľúčové slová:}% jedno, druhé, tretie (prípadne štvrté, piate)
+\paragraph*{Kľúčové slová:}Dynamické programovanie, Výučba porgramovania, Vizualizácia
+% jedno, druhé, tretie (prípadne štvrté, piate)
 % --- Koniec Abstrakt - Slovensky
 
 
@@ -171,10 +172,13 @@ Portál pozostáva z Django databázového servera a jednoduchého HTML použív
 % -------------------
 \newpage
 \section*{Abstract}
+This thesis is about implementation of interactive portal for teaching
+of dynamic programming. Learning process on our portal consists mainly of
+implementation lessons, which are automatically tested. Portal also has capacity
+to monitor users' progress and difficulty of lessons. Thesis also contains
+an interactive visualisation of recursive and memoized functions.
 
-
-
-\paragraph*{Keywords:}
+\paragraph*{Keywords:} Dynamic programming, Teaching of programming, Visualisation
 
 % --- Koniec Abstrakt - Anglicky
 
@@ -259,19 +263,39 @@ Portál pozostáva z Django databázového servera a jednoduchého HTML použív
 \bibliography{literatura}
 
 %Prípadne môžete napísať literatúru priamo tu
-%\begin{thebibliography}{5}
+\begin{thebibliography}{1}
 
-%\bibitem{br1} MOLINA H. G. - ULLMAN J. D. - WIDOM J., 2002, Database Systems, Upper Saddle River : Prentice-Hall, 2002, 1119 s., Pearson International edition, 0-13-098043-9
+\bibitem{Django}
+Django documentation.
+\newblock \url{https://docs.djangoproject.com/en/1.9/}.
+\newblock [2016-5-10].
 
-%\bibitem{br2} MOLINA H. G. - ULLMAN J. D. - WIDOM J., 2000 , Databasse System implementation, New Jersey : Prentice-Hall, 2000, 653s., ???
+\bibitem{FBlogin}
+Facebook login for the web with the javascript sdk.
+\newblock \url{https://developers.facebook.com/docs/facebook-login/web}.
+\newblock [2015-12-07].
 
-%\bibitem{br3} ULLMAN J. D. - WIDOM J., 1997, A First Course in Database Systems, New Jersey : Prentice-Hall, 1997, 470s.,
+\bibitem{rest}
+Rest framework documentation.
+\newblock \url{http://www.django-rest-framework.org/}.
+\newblock [2016-5-10].
 
-%\bibitem{br4} PREFUSE, 2007, The Prefuse visualization toolkit,  [online] Dostupné na internete: <http://prefuse.org/>
+\bibitem{visualgo}
+VisuAlgo.
+\newblock \url{http://visualgo.net/recursion}.
+\newblock [2016-5-11].
 
-%\bibitem{br5} PREFUSE Forum, Sourceforge - Prefuse Forum,  [online] Dostupné na internete: <http://sourceforge.net/projects/prefuse/>
+\bibitem{misof}
+Michal Foríšek.
+\newblock Security of programming contest systems.
+\newblock {\em Information Technologies at School 2006, pp. 553--563.}
 
-%\end{thebibliography}
+\bibitem{mares}
+Bernard~Blackham Martin~Mareš.
+\newblock A new contest sandbox.
+\newblock {\em Olympiads in informatics, 2012, Vol. 6, 100-109}
+
+\end{thebibliography}
 
 %---koniec Referencii
 
